@@ -3,3 +3,6 @@ __pycache__
 
 config.py
 chromedriver.exe
+
+# chart db
+chart.json
