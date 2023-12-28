@@ -4,6 +4,7 @@ from selenium.webdriver.common.options import *
 from selenium.webdriver.support.ui import Select
 
 from config import *
+from fetchURL import *
 
 driver = webdriver.Chrome()
 options = webdriver.ChromeOptions()
@@ -15,7 +16,7 @@ driver.find_element(By.CLASS_NAME, 'c-button--openid--twitter').click()
 driver.find_element(By.ID, 'username_or_email').send_keys(TWITTER_ID)
 driver.find_element(By.ID, 'password').send_keys(TWITTER_PW)
 driver.find_element(By.ID, 'allow').click()
-driver.get('https://chunithm-net-eng.com/mobile/friend/levelVs')
+driver.get(VS_URL)
 Select(driver.find_element(By.NAME, 'level')).select_by_visible_text('LEVEL 15')
 Select(driver.find_element(By.NAME, 'friend')).select_by_index(1)
 driver.find_element(By.CLASS_NAME, 'btn_battle').click()

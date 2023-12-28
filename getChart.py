@@ -1,4 +1,6 @@
 from requests import get
 
+from fetchURL import *
+
 with open('chart.json', 'w', encoding='utf-8') as f:
-    f.write(get('https://dp4p6x0xfi5o9.cloudfront.net/chunithm/data.json').text)
+    f.write(get(CHART_DATA_FETCH_URL).text)
