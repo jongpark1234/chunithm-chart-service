@@ -2,7 +2,6 @@ from selenium import common, types, webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.options import *
 from selenium.webdriver.support.ui import Select
-from bs4 import BeautifulSoup
 
 from config import *
 
