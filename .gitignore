@@ -3,6 +3,7 @@ __pycache__
 
 config.py
 chromedriver.exe
+userplaydata.out
 
 # chart db
 chart.json
