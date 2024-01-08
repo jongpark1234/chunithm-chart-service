@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import re
+import json
 from decimal import Decimal
 from typing import Iterable
 
@@ -37,10 +38,16 @@ def calc_rating(score: int, internal_level: float) -> Decimal:
 
     return rating / 10_000
 
-def parseChartData(obj) -> list:
-    return list(map(lambda x: re.split(r'([^.*]+\\n[^\\n]*?){4}', x), obj))
+def getChartName(obj) -> list:
+    return list(map(lambda x: x.split('\n')[1::4], obj))
 
+def getChartScore(obj) -> list:
+    return list(map(lambda x: x.split('\n')[4::4], obj))
 
+def flatten(obj) -> list:
+    return [item for sublist in obj for item in sublist]
+
+chart = json.load(open('chart.json', 'r', encoding='utf-8'))
 
 result = []
 
@@ -78,20 +85,10 @@ for i in range(5):
     driver.find_element(By.CLASS_NAME, 'btn_battle').click()
 
     genrelist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:]
-    print(parseChartData(map(lambda x: x.text, genrelist)))
-    # for genre in genrelist:
+    for name, score in zip(flatten(getChartName(map(lambda x: x.text, genrelist))), flatten(getChartScore(map(lambda x: x.text, genrelist)))):
+        print(f'{name}: {score}', end=' ')
+    print()
 
-    #     musiclist = genre.find_elements(By.XPATH, './*')[1:]
-    #     for music in musiclist:
-    #         name = music.find_element(By.XPATH, './div[1]/div[1]').text
-    #         score = music.find_element(By.XPATH, './div[2]/div[3]/div[1]').text
-    #         if score != '0':
-    #             result.append({
-    #                 'name': name,
-    #                 'diff': diffValue,
-    #                 'score': score
-    #             })
 with open('userplaydata.out', 'w', encoding='utf-8') as f:
     f.write(str(result))
 driver.quit()
-
