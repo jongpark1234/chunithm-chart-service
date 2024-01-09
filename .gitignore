@@ -3,7 +3,9 @@ __pycache__
 
 config.py
 chromedriver.exe
-userplaydata.out
+
+# flash data
+output.png
 
 # chart db
 chart.json

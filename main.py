@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.options import *
 from selenium.webdriver.support.ui import Select
@@ -6,6 +7,12 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import re
 import json
+import math
+import numpy as np
+
+from enums import Rank
+
+from html2image import Html2Image
 from decimal import Decimal
 from typing import Iterable
 
@@ -38,16 +45,17 @@ def calc_rating(score: int, internal_level: float) -> Decimal:
 
     return rating / 10_000
 
-def getChartName(obj) -> list:
-    return list(map(lambda x: x.split('\n')[1::4], obj))
+def getChartName(obj: list[WebElement]) -> list:
+    return list(map(lambda x: x.split('\n')[1::4], map(lambda y: y.text, obj)))
 
-def getChartScore(obj) -> list:
-    return list(map(lambda x: x.split('\n')[4::4], obj))
+def getChartScore(obj: list[WebElement]) -> list:
+    return list(map(lambda x: x.split('\n')[2::4], map(lambda y: y.text, obj)))
 
-def flatten(obj) -> list:
-    return [item for sublist in obj for item in sublist]
+def flatten(obj) -> np.ndarray:
+    return np.array([item for sublist in obj for item in sublist])
 
 chart = json.load(open('chart.json', 'r', encoding='utf-8'))
+
 
 result = []
 
@@ -76,19 +84,115 @@ driver.get(VS_URL)
 driver.implicitly_wait(10)
 
 for i in range(5):
-    diffRadio = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[3]/form/div[2]/input')
-    diff = diffRadio[i]
+    diffRadio = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[3]/form/div[2]/input') # difficulty radio button htmlElements
+    diff = diffRadio[i] # radio button ( i_0 -> basic, i_1 -> advanced, i_2 -> expert, i_3 -> master, i_4 -> ultima )
 
-    driver.execute_script("arguments[0].setAttribute('checked', 'checked');", diff)
+    driver.execute_script("arguments[0].setAttribute('checked', 'checked');", diff) # difficulty button click
 
     diffValue = diff.get_attribute('id') # 'basic' | 'advanced' | 'expert' | 'master' | 'ultima'
-    driver.find_element(By.CLASS_NAME, 'btn_battle').click()
+    driver.find_element(By.CLASS_NAME, 'btn_battle').click() # battle button click
 
-    genrelist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:]
-    for name, score in zip(flatten(getChartName(map(lambda x: x.text, genrelist))), flatten(getChartScore(map(lambda x: x.text, genrelist)))):
-        print(f'{name}: {score}', end=' ')
-    print()
+    genrelist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:] # All song list with genre title
+    
+    namelist = flatten(getChartName(genrelist))
+    scorelist = flatten(getChartScore(genrelist))
+    mask = scorelist != '0'
+    namelist = namelist[mask]
+    scorelist = scorelist[mask]
+    for songidx in range(len(chart['songs'])):
+        cursong = chart['songs'][songidx]
+        if cursong['category'] == "WORLD'S END":
+            continue
+        if cursong['title'] in namelist:
+            curidx = int(np.where(namelist == cursong['title'])[0])
+            name = str(namelist[curidx])
+            score = str(scorelist[curidx])
+            level = cursong['sheets'][i]['internalLevelValue']
+            rating = calc_rating(int(score.replace(',', '')), cursong['sheets'][i]['internalLevelValue'])
+            result.append({ 
+                'name': name,
+                'score': score,
+                'diff': i,
+                'diffValue': diffValue,
+                'level': cursong['sheets'][i]['internalLevel'],
+                'ratingVal': rating,
+                'rating': f'{rating:.2f}',
+                'image': IMAGE_DATA_FETCH_URL + cursong['imageName']
+            })
+result.sort(key=lambda x: -x['ratingVal'])
+html_content = f'''
+<head>
+</head>
+<body style="margin: 0;">
+    <div class="background">
+        <div class="titleContainer">TEST</div>
+        <div class="ratingContainer">
+            {'\n'.join(map(lambda x: f'''
+            <div class="element">
+                <img class="songImage" src="{x['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][x['diff']]['color']};"/>
+                <div class="songInfoContainer">
+                    <span class="songTitle">{x['name']}</span>
+                    <span class="songTitle">{x['level']}</span>
+                    <span class="songTitle">{x['score']} {Rank.from_score(int(x['score'].replace(',', '')))}</span>
+                    <span class="songTitle">{x['rating']}</span>
+                </div>
+            </div>''', result[:30]))}
+        </div>
+    </div>
+</body>'''
 
-with open('userplaydata.out', 'w', encoding='utf-8') as f:
-    f.write(str(result))
+css_content = f'''
+    * {{
+        box-sizing: border-box;
+    }}
+    .background {{
+        height: 100vh;
+        aspect-ratio: 0.586;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        flex-wrap: wrap;
+        background-color: lightgreen;
+    }}
+    .titleContainer {{
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2.5rem;
+    }}
+    .ratingContainer {{
+        width: 90%;
+        height: 80%;
+        background-color: yellow;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: wrap;
+    }}
+    .element {{
+        width: 30%;
+        height: 8%;
+        border: 1px solid black;
+        padding: 10px;
+        gap: 10px;
+        display: flex;
+        align-items: center;
+    }}
+    .songImage {{
+        height: 90%;
+        aspect-ratio: 1;
+        left: 0;
+    }}
+    .songInfoContainer {{
+        display: flex;
+        flex-direction: column;;
+    }}
+    .songTitle {{
+        font-size: 0.7rem;
+    }}'''
+
+hti = Html2Image()
+hti.screenshot(html_str=html_content, css_str=css_content, save_as='output.png')
 driver.quit()
