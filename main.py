@@ -5,19 +5,128 @@ from selenium.webdriver.common.options import *
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-import re
 import json
-import math
+import threading
 import numpy as np
 
 from enums import Rank
 
 from html2image import Html2Image
 from decimal import Decimal
-from typing import Iterable
+from typing import List
 
 from config import *
 from fetchURL import *
+
+def getAllPlayData() -> list:
+        
+    ### =================== options =================== ###
+    options = webdriver.ChromeOptions()                   #
+    options.add_argument('headless')                      #
+    options.add_argument("window-size=1920x1080")         #
+    options.add_argument("disable-gpu")                   #
+    options.add_argument("disable-infobars")              #
+    options.add_argument("--disable-extensions")          #
+    options.add_experimental_option('prefs', {            #
+        'profile.default_content_setting_values': {       #
+            'cookies': 2,                                 #
+            'images': 2,                                  #
+            'plugins': 2,                                 #
+            'popups': 2,                                  #
+            'geolocation': 2,                             #
+            'notifications': 2,                           #
+            'auto_select_certificate': 2,                 #
+            'fullscreen': 2,                              #
+            'mouselock': 2,                               #
+            'mixed_script': 2,                            #
+            'media_stream': 2,                            #
+            'media_stream_mic': 2,                        #
+            'media_stream_camera': 2,                     #
+            'protocol_handlers': 2,                       #
+            'ppapi_broker': 2,                            #
+            'automatic_downloads': 2,                     #
+            'midi_sysex': 2,                              #
+            'push_messaging': 2,                          #
+            'ssl_cert_decisions': 2,                      #
+            'metro_switch_to_desktop': 2,                 #
+            'protected_media_identifier': 2,              #
+            'app_banner': 2,                              #
+            'site_engagement': 2,                         #
+            'durable_storage': 2                          #
+        }                                                 #
+    })                                                    #
+    caps = DesiredCapabilities.CHROME                     #
+    caps['pageLoadStrategy'] = 'none'                     #
+    ### =============================================== ###
+
+    playDataByDiff = [] # return array
+    
+    driver = webdriver.Chrome(options=options) # apply option
+    driver.maximize_window()
+
+    driver.get(LOGIN_URL) # open login page
+    driver.implicitly_wait(10)
+
+    driver.find_element(By.CLASS_NAME, 'c-button--openid--twitter').click() # click the button of 'login with twitter'
+    driver.find_element(By.ID, 'username_or_email').send_keys(TWITTER_ID) # put username
+    driver.find_element(By.ID, 'password').send_keys(TWITTER_PW) # put password
+    driver.find_element(By.ID, 'allow').click() # click allow button
+
+    driver.get(VS_URL) # open vs page
+    driver.implicitly_wait(10)
+    
+    for diff in range(5):
+        
+        diffRadiolist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[3]/form/div[2]/input') # difficulty radio button WebElements
+        diffRadio = diffRadiolist[diff] # radio button ( i_0 -> basic, i_1 -> advanced, i_2 -> expert, i_3 -> master, i_4 -> ultima )
+
+        driver.execute_script("arguments[0].setAttribute('checked', 'checked');", diffRadio) # difficulty button click
+        driver.find_element(By.CLASS_NAME, 'btn_battle').click() # battle button click
+
+        playDataByDiff.append(driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:])
+        
+    driver.quit()
+    
+    return playDataByDiff
+    
+def parseWebelement(diff: int, obj: List[WebElement]):
+    namelist = flatten(getChartName(obj)) # song name list
+    scorelist = flatten(getChartScore(obj)) # song score list
+    
+    # Mask only indexes with non-zero ( played at least once ) scores
+    mask = scorelist != '0'
+    namelist = namelist[mask]
+    scorelist = scorelist[mask]
+    for song in chart['songs']:
+        if song['category'] == "WORLD'S END": # skip WORLD'S END
+            continue
+        if song['title'] in namelist:
+            curidx = int(np.where(namelist == song['title'])[0]) # 현재 chart로 조회중인 노래가 WebElement 노래 리스트에서 몇 번째 인덱스에 있는지
+            
+            name = str(namelist[curidx]) # 이름 ( str )
+            score = str(scorelist[curidx]) # 점수 ( str )
+            scoreValue = int(score.replace(',', '')) # 점수 ( int )
+            diffValue = ['basic', 'advanced', 'expert', 'master', 'ultima'][diff] # 난이도 ( str )
+            level = song['sheets'][diff]['internalLevel'] # 레벨 ( str )
+            levelValue = song['sheets'][diff]['internalLevelValue'] # 레벨 ( float )
+            ratingValue = calc_rating(scoreValue, level) # 레이팅 ( Decimal )
+            rating = f'{ratingValue:.2f}' # 레이팅 ( str )
+            image = IMAGE_DATA_FETCH_URL + song['imageName'] # 커버 이미지 ( str )
+            
+            # save at ret array
+            result.append({
+                'name': name,
+                'score': score,
+                'scoreValue': scoreValue,
+                'diff': diff,
+                'diffValue': diffValue,
+                'level': level,
+                'levelValue': levelValue,
+                'rating': rating,
+                'ratingValue': ratingValue,
+                'image': image
+            })
+
 
 def calc_rating(score: int, internal_level: float) -> Decimal:
     baselvl = Decimal(str(internal_level or 0)) * 10_000
@@ -44,155 +153,100 @@ def calc_rating(score: int, internal_level: float) -> Decimal:
         rating = Decimal(0)
 
     return rating / 10_000
-
-def getChartName(obj: list[WebElement]) -> list:
+def getChartName(obj: List[WebElement]) -> list:
     return list(map(lambda x: x.split('\n')[1::4], map(lambda y: y.text, obj)))
-
-def getChartScore(obj: list[WebElement]) -> list:
+def getChartScore(obj: List[WebElement]) -> list:
     return list(map(lambda x: x.split('\n')[2::4], map(lambda y: y.text, obj)))
-
-def flatten(obj) -> np.ndarray:
+def flatten(obj: list) -> np.ndarray[str]:
     return np.array([item for sublist in obj for item in sublist])
 
-chart = json.load(open('chart.json', 'r', encoding='utf-8'))
+if __name__ == '__main__':
+    result = []
+    chart = json.load(open('chart.json', 'r', encoding='utf-8'))
+    playData = getAllPlayData()
 
-
-result = []
-
-options = webdriver.ChromeOptions()
-options.add_argument('headless')
-options.add_argument("window-size=1920x1080")
-options.add_argument("disable-gpu") 
-options.add_argument("disable-infobars")
-options.add_argument("--disable-extensions")
-options.add_experimental_option('prefs', { 'profile.default_content_setting_values': { 'cookies' : 2, 'images': 2, 'plugins' : 2, 'popups': 2, 'geolocation': 2, 'notifications' : 2, 'auto_select_certificate': 2, 'fullscreen' : 2, 'mouselock' : 2, 'mixed_script': 2, 'media_stream' : 2, 'media_stream_mic' : 2, 'media_stream_camera': 2, 'protocol_handlers' : 2, 'ppapi_broker' : 2, 'automatic_downloads': 2, 'midi_sysex' : 2, 'push_messaging' : 2, 'ssl_cert_decisions': 2, 'metro_switch_to_desktop' : 2, 'protected_media_identifier': 2, 'app_banner': 2, 'site_engagement' : 2, 'durable_storage' : 2 } })
-caps = DesiredCapabilities.CHROME
-caps['pageLoadStrategy'] = 'none'
-
-driver = webdriver.Chrome(options=options)
-driver.maximize_window()
-
-driver.get(LOGIN_URL)
-driver.implicitly_wait(10)
-
-driver.find_element(By.CLASS_NAME, 'c-button--openid--twitter').click()
-driver.find_element(By.ID, 'username_or_email').send_keys(TWITTER_ID)
-driver.find_element(By.ID, 'password').send_keys(TWITTER_PW)
-driver.find_element(By.ID, 'allow').click()
-
-driver.get(VS_URL)
-driver.implicitly_wait(10)
-
-for i in range(5):
-    diffRadio = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[3]/form/div[2]/input') # difficulty radio button htmlElements
-    diff = diffRadio[i] # radio button ( i_0 -> basic, i_1 -> advanced, i_2 -> expert, i_3 -> master, i_4 -> ultima )
-
-    driver.execute_script("arguments[0].setAttribute('checked', 'checked');", diff) # difficulty button click
-
-    diffValue = diff.get_attribute('id') # 'basic' | 'advanced' | 'expert' | 'master' | 'ultima'
-    driver.find_element(By.CLASS_NAME, 'btn_battle').click() # battle button click
-
-    genrelist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:] # All song list with genre title
+    threads: list[threading.Thread] = []
+    for diff, obj in enumerate(playData):
+        thread = threading.Thread(target=parseWebelement, args=(diff, obj))
+        threads.append(thread)
+        thread.start()
+        print(f'start thread {diff}')
     
-    namelist = flatten(getChartName(genrelist))
-    scorelist = flatten(getChartScore(genrelist))
-    mask = scorelist != '0'
-    namelist = namelist[mask]
-    scorelist = scorelist[mask]
-    for songidx in range(len(chart['songs'])):
-        cursong = chart['songs'][songidx]
-        if cursong['category'] == "WORLD'S END":
-            continue
-        if cursong['title'] in namelist:
-            curidx = int(np.where(namelist == cursong['title'])[0])
-            name = str(namelist[curidx])
-            score = str(scorelist[curidx])
-            level = cursong['sheets'][i]['internalLevelValue']
-            rating = calc_rating(int(score.replace(',', '')), cursong['sheets'][i]['internalLevelValue'])
-            result.append({ 
-                'name': name,
-                'score': score,
-                'diff': i,
-                'diffValue': diffValue,
-                'level': cursong['sheets'][i]['internalLevel'],
-                'ratingVal': rating,
-                'rating': f'{rating:.2f}',
-                'image': IMAGE_DATA_FETCH_URL + cursong['imageName']
-            })
-result.sort(key=lambda x: -x['ratingVal'])
-html_content = f'''
-<head>
-</head>
-<body style="margin: 0;">
-    <div class="background">
-        <div class="titleContainer">TEST</div>
-        <div class="ratingContainer">
-            {'\n'.join(map(lambda x: f'''
-            <div class="element">
-                <img class="songImage" src="{x['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][x['diff']]['color']};"/>
-                <div class="songInfoContainer">
-                    <span class="songTitle">{x['name']}</span>
-                    <span class="songTitle">{x['level']}</span>
-                    <span class="songTitle">{x['score']} {Rank.from_score(int(x['score'].replace(',', '')))}</span>
-                    <span class="songTitle">{x['rating']}</span>
-                </div>
-            </div>''', result[:30]))}
+    for thread in threads:
+        thread.join()
+    print(result)
+        
+    result.sort(key=lambda x: -x['ratingValue'])
+    html_content = f'''
+    <body style="margin: 0;">
+        <div class="background">
+            <div class="titleContainer">TEST</div>
+            <div class="ratingContainer">
+                {'\n'.join(map(lambda x: f'''
+                <div class="element">
+                    <img class="songImage" src="{x['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][x['diff']]['color']};"/>
+                    <div class="songInfoContainer">
+                        <span class="songTitle">{x['name']}</span>
+                        <span class="songTitle">{x['level']}</span>
+                        <span class="songTitle">{x['score']} {Rank.from_score(x['scoreValue'])}</span>
+                        <span class="songTitle">{x['rating']}</span>
+                    </div>
+                </div>''', result[:30]))}
+            </div>
         </div>
-    </div>
-</body>'''
+    </body>'''
 
-css_content = f'''
-    * {{
-        box-sizing: border-box;
-    }}
-    .background {{
-        height: 100vh;
-        aspect-ratio: 0.586;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-        background-color: lightgreen;
-    }}
-    .titleContainer {{
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2.5rem;
-    }}
-    .ratingContainer {{
-        width: 90%;
-        height: 80%;
-        background-color: yellow;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-wrap: wrap;
-    }}
-    .element {{
-        width: 30%;
-        height: 8%;
-        border: 1px solid black;
-        padding: 10px;
-        gap: 10px;
-        display: flex;
-        align-items: center;
-    }}
-    .songImage {{
-        height: 90%;
-        aspect-ratio: 1;
-        left: 0;
-    }}
-    .songInfoContainer {{
-        display: flex;
-        flex-direction: column;;
-    }}
-    .songTitle {{
-        font-size: 0.7rem;
-    }}'''
+    css_content = f'''
+        * {{
+            box-sizing: border-box;
+        }}
+        .background {{
+            height: 100vh;
+            aspect-ratio: 0.586;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            flex-wrap: wrap;
+            background-color: lightgreen;
+        }}
+        .titleContainer {{
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+        }}
+        .ratingContainer {{
+            width: 90%;
+            height: 80%;
+            background-color: yellow;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-wrap: wrap;
+        }}
+        .element {{
+            width: 30%;
+            height: 8%;
+            border: 1px solid black;
+            padding: 10px;
+            gap: 10px;
+            display: flex;
+            align-items: center;
+        }}
+        .songImage {{
+            height: 90%;
+            aspect-ratio: 1;
+            left: 0;
+        }}
+        .songInfoContainer {{
+            display: flex;
+            flex-direction: column;;
+        }}
+        .songTitle {{
+            font-size: 0.7rem;
+        }}'''
 
-hti = Html2Image()
-hti.screenshot(html_str=html_content, css_str=css_content, save_as='output.png')
-driver.quit()
+    hti = Html2Image()
+    hti.screenshot(html_str=html_content, css_str=css_content, save_as='output.png')
