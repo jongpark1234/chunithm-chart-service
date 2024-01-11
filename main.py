@@ -162,12 +162,12 @@ for diff in range(5):
     genrelist = driver.find_elements(By.XPATH, '/html/body/div/div/div/div[1]/div[3]/div[2]/div[5]/*')[1:]
     parseWebelement(diff, genrelist)
 
-print(result)
-    
 result.sort(key=lambda x: -x['ratingValue'])
+
 html_content = f'''
-<body style="margin: 0;">
+<body>
     <div class="background">
+        <img class="chunithmLogo" src="https://i.namu.wiki/i/VLXFU1YGvXtt0d8If9GlGtLFWS7nOFDwpf__mZTDm-sOTOzEm6bzigeCAKMAQTaFe2q7cJUkQu9Ayaqi6Ml2Tp2CXNfbdrjqmdX-t7GfBnv8DH6FiZnVcgRhUwA08gp9lOtS5WUCd_ST16uoxuBZ9g.webp"/>
         <div class="titleContainer">TEST</div>
         <div class="ratingContainer">
             {'\n'.join(map(lambda x: f'''
@@ -182,59 +182,10 @@ html_content = f'''
             </div>''', result[:30]))}
         </div>
     </div>
-</body>'''
+</body>
+'''
 
-css_content = f'''
-    * {{
-        box-sizing: border-box;
-    }}
-    .background {{
-        height: 100vh;
-        aspect-ratio: 0.586;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        flex-wrap: wrap;
-        background-color: lightgreen;
-    }}
-    .titleContainer {{
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2.5rem;
-    }}
-    .ratingContainer {{
-        width: 90%;
-        height: 80%;
-        background-color: yellow;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-wrap: wrap;
-    }}
-    .element {{
-        width: 30%;
-        height: 8%;
-        border: 1px solid black;
-        padding: 10px;
-        gap: 10px;
-        display: flex;
-        align-items: center;
-    }}
-    .songImage {{
-        height: 90%;
-        aspect-ratio: 1;
-        left: 0;
-    }}
-    .songInfoContainer {{
-        display: flex;
-        flex-direction: column;;
-    }}
-    .songTitle {{
-        font-size: 0.7rem;
-    }}'''
+css_content = open('output.css', encoding='utf-8').read()
 
 hti = Html2Image()
 hti.screenshot(html_str=html_content, css_str=css_content, save_as='output.png')
