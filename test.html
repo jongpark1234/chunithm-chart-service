@@ -53,7 +53,8 @@
             display: flex;
             align-items: center;
             white-space: nowrap;
-            background: linear-gradient(145deg, rgba(119, 119, 119, 0.8) 0%, rgba(89, 89, 89, 1) 100%);
+            background: linear-gradient(145deg, rgba(119, 119, 119, 0) 0%, rgba(119, 119, 119, 1) 100%);
+            border-radius: 8px;
             overflow: hidden;
             text-overflow: ellipsis;
             padding: 5px;
@@ -75,12 +76,14 @@
             flex-direction: column;
         }
         .songTitle {
-            color: lightgrey;
+            color: white;
+            text-shadow: 0 0 1px black;
             font-size: 0.8rem;
             font-weight: bold;
         }
         .songText {
-            color: lightgrey;
+            color: white;
+            text-shadow: 0 0 1px black;
             font-size: 0.65rem;
             font-weight: bold;
         }
@@ -92,8 +95,8 @@
         }
         .songHr {
             width: 100%;
-            color: black;
-            border: 1px solid black;
+            color: grey;
+            border: 1px solid white;
             margin: 1px 0 5px 0;
         }
     </style>
@@ -107,7 +110,6 @@
                 <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
                 <div class="songInfoContainer">
                     <span class="songTitle">#1 Element</span>
-                    <hr class="songHr"/>
                     <span class="songText">15.0</span>
                     <div class="rowContainer">
                         <span class="songText">1,000,000</span>
