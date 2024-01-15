@@ -164,28 +164,31 @@ for diff in range(5):
 
 result.sort(key=lambda x: -x['ratingValue'])
 
-html_content = f'''
-<body>
+html_content = open('styleHead.html', encoding='utf-8').read() + f'''<body>
     <div class="background">
-        <img class="chunithmLogo" src="https://i.namu.wiki/i/VLXFU1YGvXtt0d8If9GlGtLFWS7nOFDwpf__mZTDm-sOTOzEm6bzigeCAKMAQTaFe2q7cJUkQu9Ayaqi6Ml2Tp2CXNfbdrjqmdX-t7GfBnv8DH6FiZnVcgRhUwA08gp9lOtS5WUCd_ST16uoxuBZ9g.webp"/>
-        <div class="titleContainer">TEST</div>
+        <div class="titleContainer">
+            <div class="infoContainer"></div>
+            <div class="infoContainer"></div>
+        </div>
         <div class="ratingContainer">
-            {'\n'.join(map(lambda x: f'''
+            {'\n'.join(map(lambda song: f'''
             <div class="element">
-                <img class="songImage" src="{x['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][x['diff']]['color']};"/>
+                <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][song[1]['diff']]['color']};"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">{x['name']}</span>
-                    <span class="songTitle">{x['level']}</span>
-                    <span class="songTitle">{x['score']} {Rank.from_score(x['scoreValue'])}</span>
-                    <span class="songTitle">{x['rating']}</span>
+                    <span class="songTitle">#{song[0] + 1} {song[1]['name']}</span>
+                    <div class="columnContainer">
+                        <span class="songText">CONST - {song[1]['level']}</span>
+                        <span class="songText">SCORE - {song[1]['score']}</span>
+                    </div>
+                    <div class="rowContainer">
+                        <span class="songRating">↪ 17.55</span>
+                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">{Rank.from_score(song[1]['scoreValue'])}</span>
+                    </div>
                 </div>
-            </div>''', result[:30]))}
+            </div>''', enumerate(result[:30])))}
         </div>
     </div>
-</body>
-'''
+</body>'''
 
-css_content = open('output.css', encoding='utf-8').read()
-
-hti = Html2Image()
-hti.screenshot(html_str=html_content, css_str=css_content, save_as='output.png')
+hti = Html2Image(size=(475, 810))
+hti.screenshot(html_str=html_content, save_as='output.png')
