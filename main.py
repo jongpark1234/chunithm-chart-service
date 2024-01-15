@@ -167,28 +167,41 @@ result.sort(key=lambda x: -x['ratingValue'])
 html_content = open('styleHead.html', encoding='utf-8').read() + f'''<body>
     <div class="background">
         <div class="titleContainer">
-            <div class="infoContainer"></div>
-            <div class="infoContainer"></div>
+            <div class="infoContainer">여기디자인은또언제함</div>
+            <div class="infoContainer">하....</div>
         </div>
         <div class="ratingContainer">
-            {'\n'.join(map(lambda song: f'''
-            <div class="element">
-                <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 2px {chart['difficulties'][song[1]['diff']]['color']};"/>
-                <div class="songInfoContainer">
-                    <span class="songTitle">#{song[0] + 1} {song[1]['name']}</span>
-                    <div class="columnContainer">
-                        <span class="songText">CONST - {song[1]['level']}</span>
-                        <span class="songText">SCORE - {song[1]['score']}</span>
-                    </div>
-                    <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">{Rank.from_score(song[1]['scoreValue'])}</span>
+            {'\n'.join(map(lambda song: f'''<div class="element">
+        <div class="elementOrder"># {song[0] + 1}</div>
+        <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">{song[1]['name']}</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
+                        <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
                     </div>
                 </div>
-            </div>''', enumerate(result[:30])))}
+                <div class="textRowContainer">
+                    <span class="songDetailKey">SCORE -</span>
+                    <span class="songText">&nbsp;{song[1]['score']}</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
+                    <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgrey, 0 0 0.3em darkgrey, 0 0 0.3em darkgrey;">{Rank.from_score(song[1]['scoreValue'])}</span>
+            </div>
+        </div>
+    </div>
+''', enumerate(result[:30])))}
         </div>
     </div>
 </body>'''
 
-hti = Html2Image(size=(475, 810))
+hti = Html2Image()
 hti.screenshot(html_str=html_content, save_as='output.png')

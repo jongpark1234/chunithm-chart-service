@@ -11,21 +11,18 @@
             font-family: 'Pretendard', 'Noto Sans JP', sans-serif;
         }
         html, body {
-            height: 100%;
             margin: 0;
         }
         .background {
-            height: 125vh;
+            height: 100%;
             aspect-ratio: 0.586;
             display: flex;
-            position: relative;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
             flex-wrap: wrap;
-            /* background: linear-gradient(to top, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);*/
-            background-color: #2b4162;
-            background-image: linear-gradient(to top, #2b4162 0%, #12100e 74%);
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #100f0D;
 
         }
         .chunithmLogo {
@@ -49,23 +46,21 @@
             background-color: white;            
         }
         .ratingContainer {
-            width: 100%;
+            width: 97%;
             height: 85%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
         }
         .element {
-            width: 30%;
-            height: 8%;
+            width: 32%;
+            height: 8.5%;
             display: flex;
-            white-space: nowrap;
-            background-color: rgb(44, 44, 44);
-            box-shadow: 0 0 5px 1px lightgrey;
+            position: relative;
+            background-color: #2C2C2C;
+            box-shadow: 0 0 4px 1px grey;
             border-radius: 3px;
-            overflow: hidden;
-            text-overflow: ellipsis;
             padding: 5px;
             gap: 10px;
         }
@@ -75,6 +70,9 @@
             align-items: center;
             justify-content: space-between;
         }
+        .textRowContainer {
+            display: flex;
+        }
         .columnContainer {
             width: 100%;
             display: flex;
@@ -83,476 +81,905 @@
         .songImage {
             height: 100%;
             aspect-ratio: 1 / 1;
+            border-radius: 2px;
             left: 0;
         }
         .songInfoContainer {
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-evenly;
+            justify-content: center;
+            gap: 5px;
         }
         .songTitle {
+            max-width: 130px;
             color: white;
-            text-shadow: 0 0 1px black;
-            font-size: 1rem;
+            font-size: 1.15rem;
             font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .songText {
             color: white;
-            text-shadow: 0 0 1px black;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.03rem;
+        }
+        .songDetailKey {
+            color: #929292;
+            font-size: 0.8rem;
             font-weight: bold;
         }
         .songRating {
             color: white;
             text-shadow: 0 0 1px black;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             font-weight: bold;
         }
+        .songRatingDetail {
+            color: white;
+            text-shadow: 0 0 1px black;
+            display: flex;
+            align-items: flex-end;
+            font-size: 0.7rem;
+            font-weight: bold;
+            letter-spacing: 0.03rem;
+        }
         .songRank {
-            color: whitesmoke;
-            font-size: 0.8rem;
+            color: rgb(255, 255, 255);
+            font-size: 0.9rem;
             font-weight: bold;
             margin-right: 5px;
         }
-        .songHr {
-            width: 100%;
-            color: grey;
-            border: 1px solid white;
-            margin: 1px 0 5px 0;
+        .elementOrder {
+            position: absolute;
+            top: 5%;
+            left: 0px;
+            width: 14%;
+            height: 20%;
+            transform: translateX(-20%);
+            background-color: #bdbdbd;
+            border-radius: 0 45% 45% 0;
+            font-weight: 900;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+       .elementOrder::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 5px solid #666666;
+            border-left: 5px solid transparent;
+            transform: translateY(100%);
+       }
     </style>
 </head>
 <body>
     <div class="background">
         <div class="titleContainer">
-            <div class="infoContainer"></div>
-            <div class="infoContainer"></div>
+            <div class="infoContainer">여기디자인은또언제다함</div>
+            <div class="infoContainer">하.....</div>
             
         </div>
         <div class="ratingContainer">
-
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <div class="elementOrder"># 1</div>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Elementasdasdsa</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.3em darkgrey, 0 0 0.3em darkgrey, 0 0 0.3em darkgrey;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
+            
             <div class="element">
-                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 2px darkorchid;"/>
+                <img class="songImage" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Earth_Eastern_Hemisphere.jpg/350px-Earth_Eastern_Hemisphere.jpg" style="box-shadow: 0 0 3px 1px darkorchid;"/>
                 <div class="songInfoContainer">
-                    <span class="songTitle">#1 Element</span>
+                    <span class="songTitle">Element</span>
                     <div class="columnContainer">
-                        <span class="songText">CONST - 15.4</span>
-                        <span class="songText">SCORE - 1,010,000</span>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">CONST -</span>
+                            <div class="textRowContainer">    
+                                <span class="songText">&nbsp;15.</span>
+                                <span class="songRatingDetail">4</span>
+                            </div>
+                        </div>
+                        <div class="textRowContainer">
+                            <span class="songDetailKey">SCORE -</span>
+                            <span class="songText">&nbsp;1,010,000</span>
+                        </div>
                     </div>
                     <div class="rowContainer">
-                        <span class="songRating">↪ 17.55</span>
-                        <span class="songRank" style="text-shadow: 0 0 0.5em lightgreen, 0 0 0.5em lightgreen, 0 0 0.5em lightgreen;">SSS+</span>
+                        <div class="textRowContainer">
+                            <span class="songRating">= 17.</span>
+                            <span class="songRatingDetail">55</span>
+                        </div>
+                        <span class="songRank" style="text-shadow: 0 0 0.4em lightgreen, 0 0 0.4em lightgreen;">SSS+</span>
                     </div>
                 </div>
             </div>
-
+            
 
         </div>
     </div>
