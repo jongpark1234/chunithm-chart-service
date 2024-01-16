@@ -6,6 +6,7 @@ chromedriver.exe
 
 # flash data
 output.png
+output.html
 
 # chart db
 chart.json
