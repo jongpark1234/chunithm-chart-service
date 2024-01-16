@@ -8,7 +8,6 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import json
 import numpy as np
 import requests
-import aspose.words
 
 from enums import Rank
 
@@ -40,7 +39,7 @@ def parseWebelement(diff: int, obj: List[WebElement]):
             level = song['sheets'][diff]['internalLevel'] # 레벨 ( str )
             levelValue = song['sheets'][diff]['internalLevelValue'] # 레벨 ( float )
             ratingValue = calc_rating(scoreValue, level) # 레이팅 ( Decimal )
-            rating = f'{ratingValue:.2f}' # 레이팅 ( str )
+            rating = f'{int(ratingValue * 100) / 100:.2f}' # 레이팅 ( str )
             image = IMAGE_DATA_FETCH_URL + song['imageName'] # 커버 이미지 ( str )
             
             # save at ret array
@@ -119,7 +118,7 @@ def getChartName(obj: List[WebElement]) -> list:
     return list(map(lambda x: x.split('\n')[1::4], map(lambda y: y.text, obj)))
 
 def getChartScore(obj: List[WebElement]) -> list:
-    return list(map(lambda x: x.split('\n')[2::4], map(lambda y: y.text, obj)))
+    return list(map(lambda x: x.split('\n')[4::4], map(lambda y: y.text, obj)))
 
 def flatten(obj: list) -> np.ndarray[str]:
     return np.array([item for sublist in obj for item in sublist])
