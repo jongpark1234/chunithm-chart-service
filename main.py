@@ -6,12 +6,12 @@ from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 import json
-import threading
 import numpy as np
+import requests
+import aspose.words
 
 from enums import Rank
 
-from html2image import Html2Image
 from decimal import Decimal
 from typing import List
 
@@ -83,6 +83,38 @@ def calc_rating(score: int, internal_level: float) -> Decimal:
         rating = Decimal(0)
 
     return rating / 10_000
+
+def getRankTextShadow(score: int) -> str:
+    if Rank.from_score(score) == Rank.SSSp:
+        bright = 0.4
+        color = 'green'
+    elif Rank.from_score(score) == Rank.SSS:
+        bright = 0.3
+        color = 'darkgoldenrod'
+    elif Rank.from_score(score) == Rank.SSp:
+        bright = 0.2
+        color = 'goldenrod'
+    elif Rank.from_score(score) == Rank.SS:
+        bright = 0.2
+        color = 'goldenrod'
+    elif Rank.from_score(score) == Rank.Sp:
+        bright = 0.1
+        color = 'gold'
+    elif Rank.from_score(score) == Rank.S:
+        bright = 0.1
+        color = 'gold'
+    elif Rank.from_score(score) in [Rank.AAA, Rank.AA, Rank.A]:
+        bright = 0.1
+        color = 'orange'
+    elif Rank.from_score(score) in [Rank.BBB, Rank.BB, Rank.B]:
+        bright = 0.1
+        color = 'turquoise'
+    else:
+        bright = 0.1
+        color = 'darkgrey'
+        
+    return ', '.join(f'0 0 {bright}em {color}' for _ in range(3))
+
 def getChartName(obj: List[WebElement]) -> list:
     return list(map(lambda x: x.split('\n')[1::4], map(lambda y: y.text, obj)))
 
@@ -164,16 +196,17 @@ for diff in range(5):
 
 result.sort(key=lambda x: -x['ratingValue'])
 
-html_content = open('styleHead.html', encoding='utf-8').read() + f'''<body>
+bn = '\n'
+html_content = open('styleHead.html', encoding='utf-8').read() + f"""<body>
     <div class="background">
         <div class="titleContainer">
-            <div class="infoContainer">여기디자인은또언제함</div>
-            <div class="infoContainer">하....</div>
+            <div class="infoContainer"></div>
+            <div class="infoContainer"></div>
         </div>
         <div class="ratingContainer">
-            {'\n'.join(map(lambda song: f'''<div class="element">
+            {bn.join(map(lambda song: f'''<div class="element">
         <div class="elementOrder"># {song[0] + 1}</div>
-        <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
         <div class="songInfoContainer">
             <span class="songTitle">{song[1]['name']}</span>
             <div class="columnContainer">
@@ -185,7 +218,7 @@ html_content = open('styleHead.html', encoding='utf-8').read() + f'''<body>
                     </div>
                 </div>
                 <div class="textRowContainer">
-                    <span class="songDetailKey">SCORE -</span>
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
                     <span class="songText">&nbsp;{song[1]['score']}</span>
                 </div>
             </div>
@@ -194,14 +227,13 @@ html_content = open('styleHead.html', encoding='utf-8').read() + f'''<body>
                     <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
                     <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
                 </div>
-                <span class="songRank" style="text-shadow: 0 0 0.3em darkgrey, 0 0 0.3em darkgrey, 0 0 0.3em darkgrey;">{Rank.from_score(song[1]['scoreValue'])}</span>
+                <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
             </div>
         </div>
     </div>
 ''', enumerate(result[:30])))}
         </div>
     </div>
-</body>'''
+</body>"""
 
-hti = Html2Image()
-hti.screenshot(html_str=html_content, save_as='output.png')
+open('output.html', 'w', encoding='utf-8').write(html_content)
