@@ -415,19 +415,63 @@
 #     "The website will display the login command. Copy it and paste it in the bot's DMs."
 #     f"If the website asks for a passcode, enter **{code}** and select OK."
 
+from config import *
+from bs4 import BeautifulSoup
+import requests
 
-# import requests
-# session = requests.Session()
-# getClal = session.get('https://lng-tgk-aime-gw.am-all.net/common_auth/')
 
-# print(getClal.cookies)
+AUTH_URL = 'https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=chuniex&redirect_url=https://chunithm-net-eng.com/mobile/&back_url=https://chunithm.sega.com/'
 
-# response = session.get('https://chunithm-net-eng.com/mobile/home/')
-# print(session.cookies.get_dict())
-# res = session.post('https://chunithm-net-eng.com/mobile/friend/genreVs/sendBattleStart/', data={
-#     'token': session.cookies.get_dict()['_t'],
-#     'genre': '99',
-#     'friend': '6090060154614',
-#     'radio_diff': '3',
-# })
-# print(res)
+login_url = 'https://lng-tgk-aime-gw.am-all.net/common_auth/login/sid/'
+
+login_params = {
+    'retention': 1,
+    'sid': SEGA_ID,
+    'password': SEGA_PW
+}
+
+login_req_headers = {
+    'Host': 'lng-tgk-aime-gw.am-all.net',
+    'Origin': 'https://lng-tgk-aime-gw.am-all.net',
+    'Referer': 'https://lng-tgk-aime-gw.am-all.net/common_auth/login?site_id=chuniex&redirect_url=https://chunithm-net-eng.com/mobile/&back_url=https://chunithm.sega.com/'
+}
+
+vs_req_headers = {
+    'Host': 'chunithm-net-eng.com',
+    'Origin': 'https://chunithm-net-eng.com',
+    'Referer': 'https://chunithm-net-eng.com/mobile/friend/genreVs/battleStart',
+}
+
+
+with requests.Session() as session:
+
+    session.get(AUTH_URL)
+
+    login = session.post(login_url, 
+                         headers=login_req_headers, 
+                         params=login_params, 
+                         allow_redirects=False)
+
+    
+    home = session.get(login.headers['Location'])
+
+    vs = session.post('https://chunithm-net-eng.com/mobile/friend/genreVs/sendBattleStart/',
+                      headers=vs_req_headers,
+                      data={
+                            'genre': '99',
+                            'friend': '8038648670957',
+                            'radio_diff': '3',
+                            'token': home.cookies['_t'],
+                        },
+                        allow_redirects=False)
+
+    vs_result = session.get(vs.headers['Location'])
+    print(len(vs_result.text)) 
+    print('start')
+    soup = BeautifulSoup(vs_result.text, 'html.parser')
+    a = list(map(lambda x: x.text, soup.find_all(attrs={'class': 'play_musicdata_highscore'})))
+    b = list(map(lambda x: x.text, soup.find_all(attrs={'class': 'block_underline text_b text_c'})))
+
+    for i, j in zip(a[1::2], b):
+        print(j, i)
+        
