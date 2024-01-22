@@ -49,34 +49,34 @@ class Rank(Enum):
             return cls.C
         return cls.D
 
-    @property
-    def min_score(self) -> int:
-        match self.value:
-            case 0:
+    @classmethod
+    def border(cls, rank: int) -> int:
+        match rank:
+            case cls.D:
                 return 0
-            case 1:
+            case cls.C:
                 return 500000
-            case 2:
+            case cls.B:
                 return 600000
-            case 3:
+            case cls.BB:
                 return 700000
-            case 4:
+            case cls.BBB:
                 return 800000
-            case 5:
+            case cls.A:
                 return 900000
-            case 6:
+            case cls.AA:
                 return 925000
-            case 7:
+            case cls.AAA:
                 return 950000
-            case 8:
+            case cls.S:
                 return 975000
-            case 9:
+            case cls.Sp:
                 return 990000
-            case 10:
+            case cls.SS:
                 return 1000000
-            case 11:
+            case cls.SSp:
                 return 1005000
-            case 12:
+            case cls.SSS:
                 return 1007500
-            case 13:
+            case cls.SSSp:
                 return 1009000
