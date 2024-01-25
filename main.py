@@ -141,6 +141,7 @@ VS_HEADERS = {
 
 with requests.Session() as session:
 
+    print('Accessing To CNBot Account...')
     session.get(LOGIN_URL)
 
     login_response = session.post(
@@ -153,7 +154,7 @@ with requests.Session() as session:
     AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
 
     for diff in range(5):
-
+        print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
         vs_result = session.post(
             url=CHUNITHM_VS_FETCH_URL,
             headers=VS_HEADERS,
