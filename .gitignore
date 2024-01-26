@@ -10,3 +10,6 @@ output.html
 
 # chart db
 chart.json
+
+.env
+config.ts
