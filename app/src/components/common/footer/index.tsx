@@ -1,9 +1,6 @@
-import { useLayoutEffect } from 'react';
 import * as style from './index.style'
 
-const Main = () => {
-    useLayoutEffect(() => {
-    }, [])
+const Navbar = () => {
     return (
         <style.background>
             
@@ -11,4 +8,4 @@ const Main = () => {
     )
 }
 
-export default Main
+export default Navbar
