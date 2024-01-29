@@ -152,6 +152,10 @@ with requests.Session() as session:
     )
 
     AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
+    
+    friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
+    friend_soup = BeautifulSoup(friend.text, 'html.parser')
+    friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', { 'class': 'friend_block' })
 
     for diff in range(5):
         print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
