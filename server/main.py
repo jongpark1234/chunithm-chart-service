@@ -1,3 +1,4 @@
+import os
 import json
 import numpy as np
 import requests
@@ -10,7 +11,10 @@ from enums import Rank
 from config import *
 from fetchURL import *
 
-    
+
+def urlParse(filename: str) -> str:
+    return os.path.dirname(os.path.realpath(__file__)) + '\\' + filename
+
 def parseWebelement(diff: int, namelist: list[str], scorelist: list[str]):
     for song in chart['songs']:
         if song['category'] == "WORLD'S END": # skip WORLD'S END
@@ -119,7 +123,7 @@ def getRankTextShadow(score: int) -> str:
 
 
 result = []
-chart = json.load(open('chart.json', 'r', encoding='utf-8'))
+chart = json.load(open(urlParse('chart.json'), 'r', encoding='utf-8'))
 
 LOGIN_PARAMS = {
     'retention': 1,
@@ -155,7 +159,15 @@ with requests.Session() as session:
     
     friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
     friend_soup = BeautifulSoup(friend.text, 'html.parser')
-    friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', { 'class': 'friend_block' })
+    friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
+
+    friend_name = friend_block.find('div', 'player_name_in').text.strip()
+    friend_lv = f'Lv. {friend_block.find("div", "player_lv").text.strip()}'
+    friend_team = friend_block.find('div', 'player_team_name').text.strip()
+    friend_rating = ''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.')
+    friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
+    friend_overpower = friend_block.find('div', 'player_overpower').text.strip()
+    print(f'name: {friend_name}\nlv: {friend_lv}\nteam: {friend_team}\nrating: {friend_rating}\nmax_rating: {friend_rating_max}\noverpower: {friend_overpower}')
 
     for diff in range(5):
         print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
@@ -180,7 +192,7 @@ with requests.Session() as session:
 result.sort(key=lambda x: -x['ratingValue'])
 
 bn = '\n'
-html_content = open('styleHead.html', encoding='utf-8').read() + f"""<body>
+html_content = open(urlParse('styleHead.html'), encoding='utf-8').read() + f"""<body>
     <div class="background">
         <div class="titleContainer">
             <div class="infoContainer"></div>
@@ -219,4 +231,4 @@ html_content = open('styleHead.html', encoding='utf-8').read() + f"""<body>
     </div>
 </body>"""
 
-open('output.html', 'w', encoding='utf-8').write(html_content)
+open(urlParse('output.html'), 'w', encoding='utf-8').write(html_content)

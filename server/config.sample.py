@@ -1,2 +1,2 @@
-TWITTER_ID = 'your_twitter_id'
-TWITTER_PW = 'your_twitter_pw'
+SEGA_ID = 'your_sega_id'
+SEGA_PW = 'your_sega_pw'
