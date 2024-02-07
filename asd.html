@@ -1,80 +1,1119 @@
-<link rel="stylesheet" href="https://chunithm-net-eng.com/mobile/css/common.css?ver=1.25" />
-<link rel="stylesheet" href="https://chunithm-net-eng.com/mobile/css/submenu.css?ver=1.25" />
-<link rel="stylesheet" href="https://chunithm-net-eng.com/mobile/css/contents.css?ver=1.25" />
-<link rel="stylesheet" href="https://chunithm-net-eng.com/mobile/css/pc.css" />
+<head>
+    <style>
+        @font-face {
+            font-family: 'Pretendard';
+            font-weight: 400;
+            src: url('./server/fonts/PretendardVariable.woff2') format('woff2-variations');
+        }
+        @font-face {
+            font-family: 'Pretendard JP';
+            font-weight: 400;
+            src: url('./server/fonts/PretendardJPVariable.woff2') format('woff2-variations');
+        }
+        * {
+            box-sizing: border-box;
+            font-family: 'Pretendard', 'Pretendard JP', 'Noto Sans JP', sans-serif;
+        }
+        html, body {
+            margin: 0;
+        }
+        .background {
+            height: 125vh;
+            aspect-ratio: 0.586;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            background-color: #100f0D;
 
-<div class="friend_block">
-    <div class="box_playerprofile .clearfix"
-        style="background-image:url(https://chunithm-net-eng.com/mobile/images/profile_normal.png)">
-        <div class="player_data_left">
-            <div class="player_chara"
-                style="background-image:url(https://chunithm-net-eng.com/mobile/images/charaframe_rainbow.png)">
-                <img src="https://chunithm-net-eng.com/mobile/img/743308b5db8ce201.png" />
-            </div>
-        </div>
-        <div class="player_data_right">
-            <div class="player_team_emblem_rainbow"></div>
-            <div class="player_team_data">
-                <div class="player_team_name font_x-small">The peak of polly</div>
-            </div>
-            <div class="player_honor_short"
-                style="background-image:url(https://chunithm-net-eng.com/mobile/images/honor_bg_platina.png)">
-                <div class="player_honor_text_view">
-                    <div class="player_honor_text" draggable="true"><span>#あくあ色ぱれっと</span></div>
-                </div>
-            </div>
-            <div class="player_name">
-                <div class="player_lv">48</div>
-                <div class="player_name_in">
-                    <form accept-charset="utf-8" action="https://chunithm-net-eng.com/mobile/friend/sendFriendDetail/"
-                        method="post">
-                        <input name="idx" type="hidden" value="8038648670957" />
-                        <input name="token" type="hidden" value="80184144e5256d720ad8556813a93d47" />
-                        <a href="JavaScript:void(0);" onclick="JavaScript:pageMove(this);">JONGPARK</a>
-                    </form>
-                </div>
-                <div class="player_classemblem">
-                    <div class="player_classemblem_top"><img src="https://chunithm-net-eng.com/mobile/images/classemblem_medal_06.png" /></div>
-                </div>
-            </div>
-            <div class="player_rating">
-                <div class="player_rating_num_block">
-                    <img src="https://chunithm-net-eng.com/mobile/images/rating/rating_rainbow_01.png" />
-                    <img src="https://chunithm-net-eng.com/mobile/images/rating/rating_rainbow_06.png" />
-                    <div class="player_rating_comma">
-                        <img src="https://chunithm-net-eng.com/mobile/images/rating/rating_rainbow_comma.png" />
+        }
+        .chunithmLogo {
+            width: 10%;
+            display: flex;
+            position: absolute;
+            top: 1%;
+            left: 1%;
+        }
+        .titleContainer {
+            width: 100%;
+            height: 10%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            font-size: 2.5rem;
+        }
+        .leftInfoContainer {
+            width: 300px;
+            height: 100px;
+            display: flex;
+            background-color: #d9d9d9;
+        }
+        .rightInfoContainer {
+            width: 300px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            background-color: #d9d9d9;
+        }
+        .charaContainer {
+            height: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+        .charaFrame {
+            height: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("https://chunithm-net-eng.com/mobile/images/charaframe_gold.png");
+            background-size: cover;
+            margin: auto auto auto 0;
+        }
+        .charaImage {
+            width: 100%;
+            height: 100%;
+            padding : 6%;
+        }
+        .profileContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .teamBg {
+            width: 100%;
+            aspect-ratio: 7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("https://chunithm-net-eng.com/mobile/images/team_bg_gold.png");
+            background-size: cover;
+            margin: 0 auto 0 auto;
+        }
+        .teamText {
+            color: white;
+            font-size: 10px;
+            margin-top: 2%;
+        }
+        .honor {
+            width: 95%;
+            aspect-ratio: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("https://chunithm-net-eng.com/mobile/images/honor_bg_gold.png");
+            background-size: cover;
+            margin: 0 auto 0 auto;
+        }
+        .honorText {
+            color: black;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .profileBoldText {
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 2%;
+        }
+        .profileClass {
+            width: 60px;
+        }
+
+
+
+        .ratingContainer {
+            width: 97%;
+            height: 85%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .element {
+            width: 32%;
+            height: 8.5%;
+            display: flex;
+            position: relative;
+            background-color: #2C2C2C;
+            box-shadow: 0 0 4px 1px grey;
+            border-radius: 3px;
+            padding: 5px;
+            gap: 10px;
+        }
+        .rowContainer {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .textRowContainer {
+            display: flex;
+            align-items: center;
+        }
+        .columnContainer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .songImage {
+            height: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 2px;
+            left: 0;
+        }
+        .songInfoContainer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+        }
+        .songTitle {
+            width: 125px;
+            color: white;
+            font-size: 1rem;
+            overflow: hidden;
+            font-weight: bold;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        .songText {
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.03rem;
+        }
+        .songDetailKey {
+            color: #929292;
+            font-size: 0.8rem;
+            font-weight: bold;
+            font-feature-settings: "ss06" 1;
+        }
+        .songRating {
+            color: white;
+            text-shadow: 0 0 1px black;
+            font-size: 1rem;
+            font-weight: bold;
+            letter-spacing: 0.02rem;
+        }
+        .songRatingDetail {
+            color: white;
+            text-shadow: 0 0 1px black;
+            display: flex;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.04rem;
+        }
+        .songRank {
+            color: rgb(255, 255, 255);
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .elementOrder {
+            position: absolute;
+            top: 5%;
+            left: 0px;
+            width: 15%;
+            height: 20%;
+            transform: translateX(-20%);
+            background-color: #bdbdbd;
+            border-radius: 0 45% 45% 0;
+            font-weight: bold;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       .elementOrder::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 5px solid #666666;
+            border-left: 5px solid transparent;
+            transform: translateY(100%);
+       }
+    </style>
+</head><body>
+    <div class="background">
+        <div class="titleContainer">
+            <div class="leftInfoContainer">
+                <div class="charaContainer">
+                    <div class="charaFrame">
+                        <img class="charaImage" src="https://chunithm-net-eng.com/mobile/img/71e1e250b22e2f4f.png"/>
                     </div>
-                    <img src="https://chunithm-net-eng.com/mobile/images/rating/rating_rainbow_03.png" />
-                    <img src="https://chunithm-net-eng.com/mobile/images/rating/rating_rainbow_08.png" />
                 </div>
-                <div class="player_rating_max">16.38</div>
+                <div class="profileContainer">
+                    <div class="teamBg">
+                        <span class="teamText">The peak of polly</span>
+                    </div>
+                    <div class="honor">
+                        <span class="honorText">The EmpErroR</span>
+                    </div>
+                    <div class="rowContainer" style="justify-content: space-around;">
+                        <span class="profileBoldText">JONGPARK</span>
+                        <span class="profileBoldText">LV. 48</span>
+                    </div>
+                    <div class="rowContainer" style="justify-content: space-around;">
+                        <img class="profileClass" src="https://chunithm-net-eng.com/mobile/images/classemblem_medal_04.png">
+                    </div>
+                </div>
             </div>
-            <div class="player_overpower">
-                <div class="player_overpower_text">16049.75 (17.21%)</div>
+            <div class="rightInfoContainer">
+
             </div>
-            <div class="player_lastplaydate">
-                <div class="player_lastplaydate_text">2024/02/05 20:26</div>
+        </div>
+        <div class="ratingContainer">
+            <div class="element">
+        <div class="elementOrder"># 1</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/41377662b28e009d4ac8a30e1a5fa3f8b910093078ee55a1eb20d593b7532e65.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">[CRYSTAL_ACCESS]</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">6</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,702</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">72</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
             </div>
         </div>
     </div>
-    <div class="friend_btn_block">
-        <div class="mt_10">
-            <div class="flo_l ml_35">
-                <form accept-charset="utf-8" action="https://chunithm-net-eng.com/mobile/friend/favoriteOff/"
-                    class="d_ib" method="post">
-                    <input name="idx" type="hidden" value="8038648670957" />
-                    <input name="token" type="hidden" value="80184144e5256d720ad8556813a93d47" />
-                    <div class="friend_favorite_off"></div>
-                </form>
+
+<div class="element">
+        <div class="elementOrder"># 2</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/11173644262bb302739c527063a4237fc34a6614b474c0c2e4bde5cbe0b3359e.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Alea jacta est!</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">7</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,007,059</span>
+                </div>
             </div>
-            <div class="flo_r mr_35">
-                <form accept-charset="utf-8" action="https://chunithm-net-eng.com/mobile/friend/friendscoreOn/"
-                    class="d_ib" method="post">
-                    <input name="idx" type="hidden" value="8038648670957" />
-                    <input name="token" type="hidden" value="80184144e5256d720ad8556813a93d47" />
-                    <div class="friend_score"></div>
-                </form>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">61</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
             </div>
         </div>
     </div>
-</div>
+
+<div class="element">
+        <div class="elementOrder"># 3</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/3934403bb6f5df14f2c3fd73564e3e41f8bf2d4b45db1d86967a75641c818b26.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">IMPACT</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">5</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,548</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">60</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 4</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/2d36794bff75ff22cf3455e1763c9654ef685e0150eb5a0559f31ca129a487d8.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">TECHNOPOLIS 2085</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">5</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,502</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">60</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 5</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/d3104b162c1957f6af3c62de5a054bd3434c41a9292264e850f3c92d1a2f9f34.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Daphnis</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,077</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">55</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 6</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/8c6b1ad81f90eae2e6a4a14bcae69bc9f31909d166e4301d140ad38758e661fd.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">U&iVERSE -銀河鸞翔-</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,213</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">55</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 7</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/2295ad1e2624e36aaf28be4c461f034dc74ea3a5358e67b3e77648146541b493.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Disruptor Array</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;15.</span>
+                        <span class="songRatingDetail">1</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,381</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">53</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 8</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/417065f7c0980605ddf7aea5d49f64371e999b29e0bd694fc94ff0b07168c91a.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">volcanic</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,292</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">47</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 9</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/247aa0efc63a2fb228353a23040d60fd58982692b955b09b864b3f7e35710cb2.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">X7124</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,226</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">45</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 10</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/e4c9fe010404b2f1c77a155989073c67cff3575ef6f6faba586cda74c8bb674b.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">DA'AT -The First Seeker of Souls-</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,378</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">45</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 11</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/b9919a57bede8234f000e6b4743e5b81d62481033effa8c0dc83c7b312580d7c.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">To：Be Continued</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,248</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">45</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 12</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/de057b77df0782d34a33b473527263549c7b2d0fba1b49e3cee723cb8cba7dac.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">混沌を越えし我らが神聖なる調律主を讃えよ</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,007,944</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">44</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 13</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/2295ad1e2624e36aaf28be4c461f034dc74ea3a5358e67b3e77648146541b493.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Disruptor Array</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,007,935</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">44</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 14</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/bb2fa8427e482938b9cdb84c17de9ef25ea135e2d706e3c175420dfe6569149f.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Taiko Drum Monster</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,007,972</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">34</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 15</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/e6950937dbd1051cc9e789be24b2c4bfa6c11797f43f05fdee838dd0751d6d9e.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Giselle</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">9</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,267</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">32</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 16</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/9958d8f632c3b23e9768769b3bed5ec711998a96512233ea1ca42d421f80031b.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">AXION</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">6</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,006,122</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">32</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 17</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/47cf8ee1c6acda6e79ef54bb21464d0ce755a75431a6b36ef7c1573a7fef3558.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">MARENOL</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">8</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,005,064</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">31</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 18</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/817f2ee06307a231b7e6e7dc31376919387294a9d974767f8951f807cbbe1692.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Brightness</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">2</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,609</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">31</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 19</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/ca0de6c31d58de2d4dbc205e26a572547eab8f47be893b7df2329629b2ee3dc5.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">サドマミホリック</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">2</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,008,572</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">30</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod, 0 0 0.3em darkgoldenrod;">SSS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 20</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/1ceba374fb00df8e71ed29160b2ab021f339f4d4dd020308ddfc05150095739f.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Titania</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">8</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,965</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">29</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 21</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/11812af0d210888fd8c3100b01457936717907eeed13bee663cb8ee79d1080be.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">燃えてもエンジョイ！宛城、炎上！！</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,007,386</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">27</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 22</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/c4d5c86464569d8700308aca0ca365aaa03af285e082dd78ae57d3405b6b282f.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Exitium</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">8</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,253</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">22</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 23</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/7f03757fc7d6d74588925964ebd4e5c2aecf7e1e2e74cfbd672b2c9dbaee4ce1.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">VERTeX</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">7</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,905</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">19</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 24</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/6ee5024dfb85120a71686dfd0bc33f659486500307acb6a781999ff9054b2eb5.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">POTENTIAL</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">0</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,009,511</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">15</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.4em green, 0 0 0.4em green, 0 0 0.4em green;">SSS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 25</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/32fcf174ae6f3e3082bcc36d6f16d3a7bfac2f9f461166818eb7ff8938ed72e4.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">the EmpErroR</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">8</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,003,440</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">14</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 26</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/7570c539fb3a3a70d76a62559171dba6bc567eed6e49a6b182372d8302bb9f6c.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">小悪魔の遊園地</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">9</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,002,383</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">13</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 27</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/71e3650215ec49a0279ee9a0dfe4ee541a95f4fb4af29152c835e01120eed077.png" style="box-shadow: 0 0 3px 1px red;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">祈 -我ら神祖と共に歩む者なり-</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">5</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,005,691</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">13</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 28</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/7a62fb2d43c22d027b0754be9f298e7556ae000387db47da0c9512190529c974.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Last Celebration</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">7</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,004,375</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">13</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 29</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/e75cee52683ca948e3f07be4055b21d0c073c47a36d3b1936a4b767ea56adbd0.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">absolute rightness</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;14.</span>
+                        <span class="songRatingDetail">3</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;1,006,653</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">13</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.2em goldenrod, 0 0 0.2em goldenrod, 0 0 0.2em goldenrod;">SS+</span>
+            </div>
+        </div>
+    </div>
+
+<div class="element">
+        <div class="elementOrder"># 30</div>
+        <img class="songImage" src="https://dp4p6x0xfi5o9.cloudfront.net/chunithm/img/cover/d3104b162c1957f6af3c62de5a054bd3434c41a9292264e850f3c92d1a2f9f34.png" style="box-shadow: 0 0 3px 1px darkorchid;"/>
+        <div class="songInfoContainer">
+            <span class="songTitle">Daphnis</span>
+            <div class="columnContainer">
+                <div class="textRowContainer">
+                    <span class="songDetailKey">CONST -</span>
+                    <div class="textRowContainer">    
+                        <span class="songText">&nbsp;15.</span>
+                        <span class="songRatingDetail">4</span>
+                    </div>
+                </div>
+                <div class="textRowContainer">
+                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                    <span class="songText">&nbsp;993,099</span>
+                </div>
+            </div>
+            <div class="rowContainer">
+                <div class="textRowContainer">
+                    <span class="songRating">↪ 16.</span>
+                    <span class="songRatingDetail">12</span>
+                </div>
+                <span class="songRank" style="text-shadow: 0 0 0.1em gold, 0 0 0.1em gold, 0 0 0.1em gold;">S+</span>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </div>
+</body>

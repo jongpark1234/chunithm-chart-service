@@ -189,7 +189,7 @@ with requests.Session() as session:
 
         parseWebelement(diff, namelist, scorelist)
 
-result.sort(key=lambda x: -x['ratingValue'])
+result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
 
 bn = '\n'
 html_content = open(urlParse('styleHead.html'), encoding='utf-8').read() + f"""<body>
