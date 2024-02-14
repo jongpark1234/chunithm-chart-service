@@ -18,7 +18,7 @@
             margin: 0;
         }
         .background {
-            height: 125vh;
+            height: calc(945px * 1.25);
             aspect-ratio: 0.586;
             display: flex;
             flex-direction: column;
@@ -44,12 +44,130 @@
             align-items: center;
             font-size: 2.5rem;
         }
-        .infoContainer {
-            width: 40%;
-            height: 70%;
-            background-color: white;            
+
+        .leftInfoContainer {
+            width: 300px;
+            height: 100px;
+            display: flex;
+            background-color: #d9d9d9;
         }
-        .ratingContainer {
+        .charaContainer {
+            height: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+        }
+        .charaFrame {
+            height: 100%;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            margin: auto auto auto 0;
+        }
+        .charaImage {
+            width: 100%;
+            height: 100%;
+            padding : 6%;
+        }
+        .profileContainer {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .teamBg {
+            width: 100%;
+            aspect-ratio: 7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            margin: 0 auto 0 auto;
+        }
+        .teamText {
+            color: white;
+            font-size: 10px;
+            margin-top: 2%;
+        }
+        .honor {
+            width: 95%;
+            aspect-ratio: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            margin: 0 auto 0 auto;
+        }
+        .honorText {
+            color: black;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .profileBoldText {
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            margin-top: 2%;
+        }
+        .profileClassEmblem {
+            width: 60px;
+        }
+
+        .rightInfoContainer {
+            width: 300px;
+            height: 100px;
+            display: flex;
+            background-color: #d9d9d9;
+            gap: 10px;
+            padding: 5px;
+        }
+        .infoTitleContainer {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            text-align: right;
+        }
+        .infoDataContainer {
+            width: 70%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            text-align: left;
+        }
+        .infoTitleText {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .infoDataText {
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .overpowerGauge {
+            height: 0.8rem;
+            width: 90%;
+            display: flex;
+            justify-content: flex-end;
+            background: rgb(137,255,253);
+            background: linear-gradient(90deg, rgba(137,255,253,1) 0%, rgba(255,249,197,1) 50%, rgba(231,137,255,1) 100%);
+            border: 1px solid black;
+        }
+        .overpowerGaugeBlock {
+            width: 20%;
+            height: 100%;
+            background-color: black;
+        }
+
+
+
+
+       .ratingContainer {
             width: 97%;
             height: 85%;
             display: flex;

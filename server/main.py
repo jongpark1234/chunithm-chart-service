@@ -156,18 +156,30 @@ with requests.Session() as session:
     )
 
     AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
+    'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ'
     
     friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
     friend_soup = BeautifulSoup(friend.text, 'html.parser')
     friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
 
+    friend_player_chara = friend_soup.find('div', 'player_chara')
+
+    friend_style_charaFrame = friend_player_chara.attrs['style']
+    friend_src_character = friend_player_chara.find('img').attrs['src']
+    friend_style_honor = friend_soup.find('div', 'player_honor_short').attrs['style']
+    friend_src_classemblem_medal = friend_soup.find('div', 'player_classemblem_top').find('img').attrs['src']
+
+    friend_honor_text = friend_soup.find('div', 'player_honor_text').text
+
     friend_name = friend_block.find('div', 'player_name_in').text.strip()
-    friend_lv = f'Lv. {friend_block.find("div", "player_lv").text.strip()}'
+    friend_lv = friend_block.find("div", "player_lv").text.strip()
     friend_team = friend_block.find('div', 'player_team_name').text.strip()
     friend_rating = ''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.')
     friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
     friend_overpower = friend_block.find('div', 'player_overpower').text.strip()
-    print(f'name: {friend_name}\nlv: {friend_lv}\nteam: {friend_team}\nrating: {friend_rating}\nmax_rating: {friend_rating_max}\noverpower: {friend_overpower}')
+    friend_overpower_const = Decimal(friend_overpower.split()[0])
+    friend_overpower_percent = Decimal(friend_overpower.split()[1][1:-2])
+    # print(f'name: {friend_name}\nlv: {friend_lv}\nteam: {friend_team}\nrating: {friend_rating}\nmax_rating: {friend_rating_max}\noverpower: {friend_overpower_const} ({friend_overpower_percent}%)')
 
     for diff in range(5):
         print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
@@ -192,12 +204,51 @@ with requests.Session() as session:
 result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
 
 bn = '\n'
-html_content = open(urlParse('styleHead.html'), encoding='utf-8').read() + f"""<body>
+html_content = open(urlParse('styleHead.html'), encoding='utf-8').read() + \
+f"""<body>
     <div class="background">
+
         <div class="titleContainer">
-            <div class="infoContainer"></div>
-            <div class="infoContainer"></div>
+            <div class="leftInfoContainer">
+                <div class="charaContainer">
+                    <div class="charaFrame" style="{friend_style_charaFrame}">
+                        <img class="charaImage" src="{friend_src_character}"/>
+                    </div>
+                </div>
+                <div class="profileContainer">
+                    <div class="teamBg" style="background-image: url(https://chunithm-net-eng.com/mobile/images/team_bg_gold.png);">
+                        <span class="teamText">{friend_team}</span>
+                    </div>
+                    <div class="honor" style="{friend_style_honor}">
+                        <span class="honorText">{friend_honor_text}</span>
+                    </div>
+                    <div class="rowContainer" style="justify-content: space-around;">
+                        <span class="profileBoldText">{friend_name}</span>
+                        <span class="profileBoldText">LV. {friend_lv}</span>
+                    </div>
+                    <div class="rowContainer" style="justify-content: space-around;">
+                        <img class="profileClassEmblem" src="{friend_src_classemblem_medal}">
+                    </div>
+                </div>
+            </div>
+            <div class="rightInfoContainer">
+                <div class="infoTitleContainer">
+                    <span class="infoTitleText">RATING</span>
+                    <span class="infoTitleText">AVERAGE</span>
+                    <span class="infoTitleText">RECENT</span>
+                    <span class="infoTitleText">OVERPOWER</span>
+                </div>
+                <div class="infoDataContainer">
+                    <span class="infoDataText">{friend_rating} ( MAX {friend_rating_max} )</span>
+                    <span class="infoDataText">{sum(map(lambda x: x['ratingValue'], result)) / 30:.2f}</span>
+                    <span class="infoDataText">16.?? ( Reachable 16.?? )</span>
+                    <div class="overpowerGauge">
+                        <div class="overpowerGaugeBlock" style="width: {100 - friend_overpower_percent}%"></div>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="ratingContainer">
             {bn.join(map(lambda song: f'''<div class="element">
         <div class="elementOrder"># {song[0] + 1}</div>
