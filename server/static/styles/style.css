@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'Pretendard';
+    font-weight: 400;
+    src: url('/static/fonts/PretendardVariable.woff2') format('woff2-variations');
+}
+
+@font-face {
+    font-family: 'Pretendard JP';
+    font-weight: 400;
+    src: url('/static/fonts/PretendardJPVariable.woff2') format('woff2-variations');
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'Pretendard', 'Pretendard JP', 'Noto Sans JP', sans-serif;
+}
+
+body {
+    margin: 0;
+}
+
+.headerContainer {
+    width: 100%;
+    height: 75px;
+    display: flex;
+    background-color: rgb(25, 25, 25);
+    border-bottom: 2px solid rgb(100, 100, 100);
+}
+
+.headerItems {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: .15s ease-in-out;
+    cursor: pointer;
+}
+.headerItems:hover {
+    background-color: rgb(50, 50, 50);
+}
+
+.headerAuthItems {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: lightgrey;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.footerContainer {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    background-color: rgb(25, 25, 25);
+}
+
+.mainWrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(25, 25, 25)
+}
+
+.mainTitle {
+    color: white;
+    font-size: 5rem;
+    font-weight: bold;
+    -webkit-box-reflect: below -20px linear-gradient(transparent, rgba(0,0,0,.2));
+    animation: 2s anim-lineUp ease-out
+}
+
+@keyframes anim-lineUp {
+    0% {
+        opacity: 0;
+        transform: translateY(80%);
+    }
+    20% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}

@@ -12,6 +12,7 @@ from typing import List
 from enums import Rank
 from config import *
 from fetchURL import *
+import sourcetypes
 
 
 def urlParse(filename: str) -> str:
@@ -165,7 +166,6 @@ def replaceAlphabet(string: str) -> str:
         string = string.replace(i, chr(ord(i) - 65248))
     return string
 
-
 result = []
 chart = json.load(open(urlParse('chart.json'), 'r', encoding='utf-8'))
 
@@ -252,11 +252,13 @@ recent = friend_rating * 2 - Decimal(best30_sum) / 30
 reachable = (best30_sum / 30 + best10_sum / 10) / 2
 
 bn = '\n'
-html_content = open(urlParse('styleHead.html'), encoding='utf-8').read() + \
-f"""<body>
+
+stylehead = open(urlParse('styleHead.html'), encoding='utf-8').read()
+html_content: sourcetypes.xml = f"""<body>
     <div class="background">
 
         <div class="titleContainer">
+
             <div class="leftInfoContainer" {playerProfileStyle(friend_possession)}>
                 <div class="charaContainer">
                     <div class="charaFrame" style="{friend_style_charaFrame}">
@@ -279,6 +281,7 @@ f"""<body>
                     </div>
                 </div>
             </div>
+
             <div class="rightInfoContainer" {playerProfileStyle(friend_possession)}>
                 <div class="infoTitleContainer">
                     <span class="infoTitleText">RATING</span>
@@ -295,42 +298,47 @@ f"""<body>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="ratingContainer">
+
             {bn.join(map(lambda song: f'''
-            <div class="element">
-                <div class="elementOrder"># {song[0] + 1}</div>
-                <div class="elementWrapper">
-                    <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
-                    <div class="songInfoContainer">
-                        <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
-                        <div class="columnContainer">
-                            <div class="textRowContainer">
-                                <span class="songDetailKey">CONST -</span>
-                                <div class="textRowContainer">    
-                                    <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
-                                    <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
+                <div class="element">
+                    <div class="elementOrder"># {song[0] + 1}</div>
+                    <div class="elementWrapper">
+                        <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
+                        <div class="songInfoContainer">
+                            <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
+                            <div class="columnContainer">
+                                <div class="textRowContainer">
+                                    <span class="songDetailKey">CONST -</span>
+                                    <div class="textRowContainer">    
+                                        <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
+                                        <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
+                                    </div>
+                                </div>
+                                <div class="textRowContainer">
+                                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                                    <span class="songText">&nbsp;{song[1]['score']}</span>
                                 </div>
                             </div>
-                            <div class="textRowContainer">
-                                <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
-                                <span class="songText">&nbsp;{song[1]['score']}</span>
+                            <div class="rowContainer">
+                                <div class="textRowContainer">
+                                    <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
+                                    <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
+                                </div>
+                                <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
                             </div>
-                        </div>
-                        <div class="rowContainer">
-                            <div class="textRowContainer">
-                                <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
-                                <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
-                            </div>
-                            <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
                         </div>
                     </div>
                 </div>
-            </div>
-''', enumerate(result)))}
+            ''', enumerate(result)))}
+
         </div>
+
     </div>
 </body>"""
 
-open(urlParse('output.html'), 'w', encoding='utf-8').write(html_content)
+open(urlParse('output.html'), 'w', encoding='utf-8').write(stylehead + html_content)
+
