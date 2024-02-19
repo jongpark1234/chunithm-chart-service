@@ -1,6 +1,19 @@
-<header class="headerContainer">
-    <div class="headerItems">MAIN</div>
-    <div class="headerItems">Best30</div>
-    <div class="headerItems">CONST</div>
-    <div class="headerAuthItems">REGISTER</div>
+<header class="headerContainer" id="header">
+    <a class="headerItems" href="./main">MAIN</a>
+    <a class="headerItems" href="./best30">1</a>
+    <a class="headerItems" href="./const">2</a>
 </header>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const content = document.createElement('a')
+        content.className = 'headerAuthItems'
+        if (window.localStorage.getItem('Auth') === null) {
+            content.href = './register'
+            content.innerText = 'REGISTER'
+        } else {
+            content.href = './profile'
+            content.innerText = 'LOGINED'
+        }
+        document.getElementById('header').appendChild(content)
+    })
+</script>

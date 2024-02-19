@@ -166,6 +166,19 @@ def replaceAlphabet(string: str) -> str:
         string = string.replace(i, chr(ord(i) - 65248))
     return string
 
+def isExistFriend(serial_code: str) -> bool:
+    with requests.Session() as session:
+        session.get(LOGIN_URL)
+        login_response = session.post(url=LOGIN_FETCH_URL, headers=LOGIN_HEADERS, params=LOGIN_PARAMS, allow_redirects=False)
+        session.get(login_response.headers['Location'])
+
+        friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
+        friend_soup = BeautifulSoup(friend.text, 'html.parser')
+        friend_block = friend_soup.find('input', { 'value': serial_code })
+        
+        return bool(friend_block)
+
+
 result = []
 chart = json.load(open(urlParse('chart.json'), 'r', encoding='utf-8'))
 
@@ -186,159 +199,160 @@ VS_HEADERS = {
     'Origin': CHUNITHM_MAIN_URL,
     'Referer': CHUNITHM_VS_BATTLESTART_URL,
 }
+if __name__ == '__main__':
 
-with requests.Session() as session:
+    with requests.Session() as session:
 
-    print('Accessing To CNBot Account...')
-    session.get(LOGIN_URL)
+        print('Accessing To CNBot Account...')
+        session.get(LOGIN_URL)
 
-    login_response = session.post(
-        url=LOGIN_FETCH_URL,
-        headers=LOGIN_HEADERS,
-        params=LOGIN_PARAMS,
-        allow_redirects=False
-    )
-
-    AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
-    
-    friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
-    friend_soup = BeautifulSoup(friend.text, 'html.parser')
-    friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
-
-    friend_player_chara = friend_soup.find('div', 'player_chara')
-
-    friend_style_charaFrame = friend_player_chara.attrs['style']
-    friend_src_character = friend_player_chara.find('img').attrs['src']
-    friend_style_honor = friend_soup.find('div', 'player_honor_short').attrs['style']
-    friend_src_classemblem_medal = friend_soup.find('div', 'player_classemblem_top').find('img').attrs['src']
-
-    friend_honor_text = friend_soup.find('div', 'player_honor_text').text
-
-    friend_name = friend_block.find('div', 'player_name_in').text.strip()
-    friend_lv = friend_block.find("div", 'player_lv').text.strip()
-    friend_team = friend_block.find('div', 'player_team_name').text.strip()
-    friend_rating = Decimal(''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.'))
-    friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
-    friend_overpower = friend_block.find('div', 'player_overpower').text.strip()
-    friend_overpower_const = Decimal(friend_overpower.split()[0])
-    friend_overpower_percent = Decimal(friend_overpower.split()[1][1:-2])
-    friend_possession = friend_block.find('div', 'box_playerprofile .clearfix').attrs['style'].split('/')[-1].split('.')[0]
-    
-    for diff in range(5):
-        print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
-        vs_result = session.post(
-            url=CHUNITHM_VS_FETCH_URL,
-            headers=VS_HEADERS,
-            data={
-                'genre': 99,
-                'friend': 8038648670957,
-                'radio_diff': diff,
-                'loseOnly': 'on',
-                'token': AUTH_TOKEN
-            }
+        login_response = session.post(
+            url=LOGIN_FETCH_URL,
+            headers=LOGIN_HEADERS,
+            params=LOGIN_PARAMS,
+            allow_redirects=False
         )
 
-        soup = BeautifulSoup(vs_result.text, 'html.parser')
-        namelist = list(map(lambda x: x.text, soup.find_all(attrs={ 'class': 'block_underline text_b text_c' })))
-        scorelist = list(map(lambda x: x.text, soup.find_all(attrs={ 'class': 'play_musicdata_highscore' })))[1::2]
-        comboStatuslist = list(soup.find_all(attrs={ 'class': 'vs_list_friendbatch clearfix' }))
-        parseWebelement(diff, namelist, scorelist, comboStatuslist)
+        AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
+        
+        friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
+        friend_soup = BeautifulSoup(friend.text, 'html.parser')
+        friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
 
-result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
-result = result[:30]
-best30_sum = Decimal(sum(map(lambda x: x['ratingValue'], result)))
-best10_sum = Decimal(sum(map(lambda x: x['ratingValue'], result[:10])))
-recent = friend_rating * 2 - Decimal(best30_sum) / 30
-reachable = (best30_sum / 30 + best10_sum / 10) / 2
+        friend_player_chara = friend_soup.find('div', 'player_chara')
 
-bn = '\n'
+        friend_style_charaFrame = friend_player_chara.attrs['style']
+        friend_src_character = friend_player_chara.find('img').attrs['src']
+        friend_style_honor = friend_soup.find('div', 'player_honor_short').attrs['style']
+        friend_src_classemblem_medal = friend_soup.find('div', 'player_classemblem_top').find('img').attrs['src']
 
-stylehead = open(urlParse('styleHead.html'), encoding='utf-8').read()
-html_content: sourcetypes.xml = f"""<body>
-    <div class="background">
+        friend_honor_text = friend_soup.find('div', 'player_honor_text').text
 
-        <div class="titleContainer">
+        friend_name = friend_block.find('div', 'player_name_in').text.strip()
+        friend_lv = friend_block.find("div", 'player_lv').text.strip()
+        friend_team = friend_block.find('div', 'player_team_name').text.strip()
+        friend_rating = Decimal(''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.'))
+        friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
+        friend_overpower = friend_block.find('div', 'player_overpower').text.strip()
+        friend_overpower_const = Decimal(friend_overpower.split()[0])
+        friend_overpower_percent = Decimal(friend_overpower.split()[1][1:-2])
+        friend_possession = friend_block.find('div', 'box_playerprofile .clearfix').attrs['style'].split('/')[-1].split('.')[0]
+        
+        for diff in range(5):
+            print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
+            vs_result = session.post(
+                url=CHUNITHM_VS_FETCH_URL,
+                headers=VS_HEADERS,
+                data={
+                    'genre': 99,
+                    'friend': 8038648670957,
+                    'radio_diff': diff,
+                    'loseOnly': 'on',
+                    'token': AUTH_TOKEN
+                }
+            )
 
-            <div class="leftInfoContainer" {playerProfileStyle(friend_possession)}>
-                <div class="charaContainer">
-                    <div class="charaFrame" style="{friend_style_charaFrame}">
-                        <img class="charaImage" src="{friend_src_character}"/>
+            soup = BeautifulSoup(vs_result.text, 'html.parser')
+            namelist = list(map(lambda x: x.text, soup.find_all(attrs={ 'class': 'block_underline text_b text_c' })))
+            scorelist = list(map(lambda x: x.text, soup.find_all(attrs={ 'class': 'play_musicdata_highscore' })))[1::2]
+            comboStatuslist = list(soup.find_all(attrs={ 'class': 'vs_list_friendbatch clearfix' }))
+            parseWebelement(diff, namelist, scorelist, comboStatuslist)
+
+    result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
+    result = result[:30]
+    best30_sum = Decimal(sum(map(lambda x: x['ratingValue'], result)))
+    best10_sum = Decimal(sum(map(lambda x: x['ratingValue'], result[:10])))
+    recent = friend_rating * 2 - Decimal(best30_sum) / 30
+    reachable = (best30_sum / 30 + best10_sum / 10) / 2
+
+    bn = '\n'
+
+    style_head = open(urlParse('styleHead.html'), encoding='utf-8').read()
+    html_content: sourcetypes.xml = f"""<body>
+        <div class="background">
+
+            <div class="titleContainer">
+
+                <div class="leftInfoContainer" {playerProfileStyle(friend_possession)}>
+                    <div class="charaContainer">
+                        <div class="charaFrame" style="{friend_style_charaFrame}">
+                            <img class="charaImage" src="{friend_src_character}"/>
+                        </div>
                     </div>
-                </div>
-                <div class="profileContainer">
-                    <div class="teamBg" style="background-image: url(https://chunithm-net-eng.com/mobile/images/team_bg_gold.png);">
-                        <span class="teamText">{replaceAlphabet(friend_team)}</span>
-                    </div>
-                    <div class="honor" style="{friend_style_honor}">
-                        <span class="honorText">{friend_honor_text}</span>
-                    </div>
-                    <div class="rowContainer" style="justify-content: space-around;">
-                        <span class="profileBoldText">{replaceAlphabet(friend_name)}</span>
-                        <span class="profileBoldText">LV. {friend_lv}</span>
-                    </div>
-                    <div class="rowContainer" style="justify-content: space-around;">
-                        <img class="profileClassEmblem" src="{friend_src_classemblem_medal}">
-                    </div>
-                </div>
-            </div>
-
-            <div class="rightInfoContainer" {playerProfileStyle(friend_possession)}>
-                <div class="infoTitleContainer">
-                    <span class="infoTitleText">RATING</span>
-                    <span class="infoTitleText">AVERAGE</span>
-                    <span class="infoTitleText">RECENT</span>
-                    <span class="infoTitleText">OVERPOWER</span>
-                </div>
-                <div class="infoDataContainer">
-                    <span class="infoDataText">{friend_rating} ( MAX {friend_rating_max} )</span>
-                    <span class="infoDataText">{sum(map(lambda x: x['ratingValue'], result)) / 30:.2f}</span>
-                    <span class="infoDataText">{recent:.2f} ( Reachable {reachable:.2f} )</span>
-                    <div class="overpowerGauge">
-                        <div class="overpowerGaugeBlock" style="width: {100 - friend_overpower_percent}%"></div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <div class="ratingContainer">
-
-            {bn.join(map(lambda song: f'''
-                <div class="element">
-                    <div class="elementOrder"># {song[0] + 1}</div>
-                    <div class="elementWrapper">
-                        <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
-                        <div class="songInfoContainer">
-                            <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
-                            <div class="columnContainer">
-                                <div class="textRowContainer">
-                                    <span class="songDetailKey">CONST -</span>
-                                    <div class="textRowContainer">    
-                                        <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
-                                        <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
-                                    </div>
-                                </div>
-                                <div class="textRowContainer">
-                                    <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
-                                    <span class="songText">&nbsp;{song[1]['score']}</span>
-                                </div>
-                            </div>
-                            <div class="rowContainer">
-                                <div class="textRowContainer">
-                                    <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
-                                    <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
-                                </div>
-                                <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
-                            </div>
+                    <div class="profileContainer">
+                        <div class="teamBg" style="background-image: url(https://chunithm-net-eng.com/mobile/images/team_bg_gold.png);">
+                            <span class="teamText">{replaceAlphabet(friend_team)}</span>
+                        </div>
+                        <div class="honor" style="{friend_style_honor}">
+                            <span class="honorText">{friend_honor_text}</span>
+                        </div>
+                        <div class="rowContainer" style="justify-content: space-around;">
+                            <span class="profileBoldText">{replaceAlphabet(friend_name)}</span>
+                            <span class="profileBoldText">LV. {friend_lv}</span>
+                        </div>
+                        <div class="rowContainer" style="justify-content: space-around;">
+                            <img class="profileClassEmblem" src="{friend_src_classemblem_medal}">
                         </div>
                     </div>
                 </div>
-            ''', enumerate(result)))}
+
+                <div class="rightInfoContainer" {playerProfileStyle(friend_possession)}>
+                    <div class="infoTitleContainer">
+                        <span class="infoTitleText">RATING</span>
+                        <span class="infoTitleText">AVERAGE</span>
+                        <span class="infoTitleText">RECENT</span>
+                        <span class="infoTitleText">OVERPOWER</span>
+                    </div>
+                    <div class="infoDataContainer">
+                        <span class="infoDataText">{friend_rating} ( MAX {friend_rating_max} )</span>
+                        <span class="infoDataText">{sum(map(lambda x: x['ratingValue'], result)) / 30:.2f}</span>
+                        <span class="infoDataText">{recent:.2f} ( Reachable {reachable:.2f} )</span>
+                        <div class="overpowerGauge">
+                            <div class="overpowerGaugeBlock" style="width: {100 - friend_overpower_percent}%"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="ratingContainer">
+
+                {bn.join(map(lambda song: f'''
+                    <div class="element">
+                        <div class="elementOrder"># {song[0] + 1}</div>
+                        <div class="elementWrapper">
+                            <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
+                            <div class="songInfoContainer">
+                                <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
+                                <div class="columnContainer">
+                                    <div class="textRowContainer">
+                                        <span class="songDetailKey">CONST -</span>
+                                        <div class="textRowContainer">    
+                                            <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
+                                            <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
+                                        </div>
+                                    </div>
+                                    <div class="textRowContainer">
+                                        <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                                        <span class="songText">&nbsp;{song[1]['score']}</span>
+                                    </div>
+                                </div>
+                                <div class="rowContainer">
+                                    <div class="textRowContainer">
+                                        <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
+                                        <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
+                                    </div>
+                                    <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ''', enumerate(result)))}
+
+            </div>
 
         </div>
+    </body>"""
 
-    </div>
-</body>"""
-
-open(urlParse('output.html'), 'w', encoding='utf-8').write(stylehead + html_content)
+    open(urlParse('output.html'), 'w', encoding='utf-8').write(style_head + html_content)
 

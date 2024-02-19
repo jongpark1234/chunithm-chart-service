@@ -1,0 +1,29 @@
+<div class="mainWrapper" style="justify-content: center; row-gap: 10px">
+    <span class="plainText">REGISTER</span>
+    <input id="registerInput" class="loginInput" spellcheck="false"/>
+    <button id="registerButton" class="loginButton" onclick="submitRegister()">Submit</button>
+</div>
+
+<script>
+    const submitRegister = () => {
+        const serial_code = document.getElementById('registerInput').value;
+        
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/register/submit', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = () => {
+
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                if (response.status === 200) {
+                    alert('register success');
+                    localStorage.setItem('Auth', serial_code);
+                    window.location.href = '/main';
+                } else {
+                    alert('register failed ( not exists )');
+                }
+            }
+        };
+        xhr.send(serial_code); 
+    }
+</script>

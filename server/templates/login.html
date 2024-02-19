@@ -1,0 +1,28 @@
+<div class="mainWrapper" style="justify-content: center; row-gap: 10px">
+    <span class="plainText">INPUT</span>
+    <input id="loginInput" class="loginInput" spellcheck="false"/>
+    <button id="loginButton" class="loginButton" onclick="submitLogin()">Login</button>
+</div>
+
+<script>
+    const submitLogin = () => {
+        const serial_code = document.getElementById('loginInput').value;
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/login', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                let response = JSON.parse(xhr.responseText);
+                if (response.status === 200) {
+                    alert('login success');
+                    localStorage.setItem('Auth', serial_code);
+                    window.location.href = '/main';
+                } else {
+                    alert('login failed ( not exists )');
+                }
+            }
+        };
+        xhr.send(serial_code); 
+    }
+</script>
