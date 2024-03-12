@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask, request, jsonify, render_template, redirect
-from main import isExistFriend
+from main import isExistFriend, sendFriendInvite
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -56,11 +56,15 @@ def login():
         json_res = { 'status': 200 }
     else:
         json_res = { 'status': 404 }
+        
     return jsonify(json_res)
 
 @app.route('/api/register/submit', methods=['POST'])
 def registerSubmit():
-    ...
+    friend_code = request.data.decode()
+    send_invite_status_code = sendFriendInvite(friend_code)
+
+    return jsonify({ 'status': send_invite_status_code })
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

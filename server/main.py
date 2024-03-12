@@ -177,6 +177,17 @@ def isExistFriend(serial_code: str) -> bool:
         friend_block = friend_soup.find('input', { 'value': serial_code })
         
         return bool(friend_block)
+    
+def sendFriendInvite(friend_code: str) -> int:
+    with requests.Session() as session:
+        session.get(LOGIN_URL)
+        login_response = session.post(url=LOGIN_FETCH_URL, headers=LOGIN_HEADERS, params=LOGIN_PARAMS, allow_redirects=False)
+        AUTH_TOKEN = session.get(login_response.headers['Location']).cookies['_t']
+        send_invite = session.post('https://chunithm-net-eng.com/mobile/friend/search/sendInvite/', data={
+            'idx': friend_code,
+            'token': AUTH_TOKEN
+        })
+        return send_invite.status_code
 
 
 result = []
@@ -217,7 +228,7 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '8029996787750' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_soup.find('div', 'player_chara')
 
@@ -245,7 +256,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 8038648670957,
+                    'friend': 8029996787750,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
