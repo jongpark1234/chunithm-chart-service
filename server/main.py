@@ -2,6 +2,9 @@ import os
 import json
 import numpy as np
 import requests
+from selenium import webdriver
+
+import imgkit
 
 from bs4 import BeautifulSoup
 from bs4.element import Tag
@@ -365,5 +368,13 @@ if __name__ == '__main__':
         </div>
     </body>"""
 
+    
     open(urlParse('output.html'), 'w', encoding='utf-8').write(style_head + html_content)
-
+    options = webdriver.ChromeOptions()
+    options.add_argument('window-size=1200x1200')
+    options.add_argument('headless')
+    driver = webdriver.Chrome(options=options)
+    driver.get(urlParse('output.html'))
+    element = driver.find_element('class name', 'background')
+    with open('output.png', 'wb') as file:
+        file.write(element.screenshot_as_png)
