@@ -211,7 +211,7 @@ LOGIN_HEADERS = {
 VS_HEADERS = {
     'Host': CHUNITHM_MAIN_URL.replace('https://', ''),
     'Origin': CHUNITHM_MAIN_URL,
-    'Referer': CHUNITHM_VS_BATTLESTART_URL,
+    'Referer': CHUNITHM_FRIEND_VS_BATTLESTART_URL,
 }
 if __name__ == '__main__':
 
@@ -231,16 +231,20 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '8029996787750' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
 
-        friend_player_chara = friend_soup.find('div', 'player_chara')
+        friend_player_chara = friend_block.find('div', 'player_chara')
 
         friend_style_charaFrame = friend_player_chara.attrs['style']
         friend_src_character = friend_player_chara.find('img').attrs['src']
-        friend_style_honor = friend_soup.find('div', 'player_honor_short').attrs['style']
-        friend_src_classemblem_medal = friend_soup.find('div', 'player_classemblem_top').find('img').attrs['src']
+        friend_style_honor = friend_block.find('div', 'player_honor_short').attrs['style']
+        friend_src_classemblem_medal = friend_block.find('div', 'player_classemblem_top')
+        if friend_src_classemblem_medal:
+            friend_src_classemblem_medal = friend_src_classemblem_medal.find('img').attrs['src']
+        else:
+            friend_src_classemblem_medal = ''
 
-        friend_honor_text = friend_soup.find('div', 'player_honor_text').text
+        friend_honor_text = friend_block.find('div', 'player_honor_text').text
 
         friend_name = friend_block.find('div', 'player_name_in').text.strip()
         friend_lv = friend_block.find("div", 'player_lv').text.strip()
@@ -255,11 +259,11 @@ if __name__ == '__main__':
         for diff in range(5):
             print(f'Fetching {chart["difficulties"][diff]["name"]} Data...')
             vs_result = session.post(
-                url=CHUNITHM_VS_FETCH_URL,
+                url=CHUNITHM_FRIEND_VS_FETCH_URL,
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 8029996787750,
+                    'friend': 8038648670957,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
@@ -294,7 +298,7 @@ if __name__ == '__main__':
                         </div>
                     </div>
                     <div class="profileContainer">
-                        <div class="teamBg" style="background-image: url(https://chunithm-net-eng.com/mobile/images/team_bg_gold.png);">
+                        <div class="teamBg" style="background-image: url(https://chunithm-net-eng.com/mobile/images/team_bg_rainbow.png);">
                             <span class="teamText">{replaceAlphabet(friend_team)}</span>
                         </div>
                         <div class="honor" style="{friend_style_honor}">
@@ -305,7 +309,7 @@ if __name__ == '__main__':
                             <span class="profileBoldText">LV. {friend_lv}</span>
                         </div>
                         <div class="rowContainer" style="justify-content: space-around;">
-                            <img class="profileClassEmblem" src="{friend_src_classemblem_medal}">
+                            {f'<img class="profileClassEmblem" src="{friend_src_classemblem_medal}">' if friend_src_classemblem_medal else ''}
                         </div>
                     </div>
                 </div>
