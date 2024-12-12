@@ -17,158 +17,8 @@ from config import *
 from fetchURL import *
 import sourcetypes
 
-const = {
-    'master': {
-        'Forsaken Tale': 15.7,
-        '業 -善なる神とこの世の悪について-': 15.6,
-        'The Metaverse -First story of the SeelischTact-': 15.7,
-        '祈 -我ら神祖と共に歩む者なり-': 15.7,
-        'MALKUTH -The Last Ruler of Terrestrials-': 15.6,
-        'Daphnis': 15.6,
-        'Chaotic Ørder': 15.6,
-        'Ultimate Force': 15.6,
-        'ピアノ協奏曲第1番"蠍火"': 15.5,
-        'ラストピースに祝福と栄光を': 15.5,
-        '混沌を越えし我らが神聖なる調律主を讃えよ': 15.5,
-        'World Vanquisher': 15.5,
-        'DA\'AT -The First Seeker of Souls-': 15.6,
-        'グラウンドスライダー協奏曲第一番「風唄」': 15.6,
-        'Makear': 15.5,
-        'Tuatha Dé Danann': 15.5,
-        'Stardust:RAY': 15.3,
-        'To：Be Continued': 15.5,
-        'macrocosmos': 15.4,
-        'Rebellion': 15.4,
-        '宿星審判': 15.4,
-        'Λzure Vixen': 15.5,
-        'βlαnoir': 15.4,
-        'Acid God': 15.4,
-        'What\'s up? Pop!': 15.3,
-        'ANU': 15.3,
-        'POTENTIAL': 15.3,
-        '怒槌': 15.4,
-        '玩具狂奏曲 -終焉-': 15.3,
-        'Trrricksters!!': 15.3,
-        'X7124': 15.3,
-        'parvorbital': 15.3,
-        'Strange Love': 15.3,
-        'Disruptor Array': 15.3,
-        'リ・フィクション・O': 15.3,
-        'ENDYMION': 15.2,
-        'Invisible Frenzy': 15.2,
-        'sølips': 15.3,
-        'LAMIA': 15.3,
-        'MeteorSnow': 15.2,
-        'Contrapasso -inferno-': 15.2,
-        'otorii INNOVATED -[i]3-': 15.2,
-        'TiamaT:F minor': 15.3,
-        'Killing Rhythm': 15.3,
-        '雪男': 15.2,
-        '蜘蛛の糸': 15.2,
-        'ZegalltA': 15.2,
-        'マシンガンポエムドール':15.1,
-        'Armageddon': 15.1,
-        'Big Bang': 15.1,
-        'Finite': 15.2,
-        '神威': 15.1,
-        'A Site De La Rue': 15.1,
-        'Rrhar\'il': 15.1,
-        'ΩΩPARTS': 15.2,
-        'Odin': 15.1,
-        '幻想即興曲': 15.1,
-        'HAELEQUIN (Original Remaster)': 15.2,
-        '★LittlE HearTs★': 15.2,
-        'Dengeki Tube': 15.2,
-        'Giselle': 15.1,
-        '小悪魔の遊園地': 15.1,
-        'アポカリプスに反逆の焔を焚べろ': 15.1,
-        'Mutation': 15.1,
-        'チューリングの跡': 15.1,
-        'Latent Kingdom': 15.1,
-        'YURUSHITE': 15.1,
-        'Viyella\'s Tears': 15.1,
-        '脳天直撃': 15.1,
-        'Singularity': 15.1,
-        'MarbleBlue.': 15.2,
-        'Xevel': 15.1,
-        '赤壁、大炎上！！': 15.1,
-        'Schrecklicher Aufstand': 15.1,
-        'Devastating Blaster': 15.0,
-        'Glorious Crown (tpz over-Over-OVERCUTE REMIX)': 15.0,
-        'Surveiller et punir': 15.1,
-        'GIGA DRIVE': 15.1,
-        'Blazing:Storm': 15.0,
-        'Scythe of Death': 15.2,
-        '《創造》 ～ Cries, beyond The End': 15.1,
-        'LibrariA': 15.2,
-        'Wizdomiot': 15.0,
-        'Lemegeton -little key of solomon-': 14.9,
-        'Exitium': 14.9,
-        'AttraqtiA': 14.9,
-        'Sheriruth': 14.9,
-        'SINister Evolution': 14.9,
-        'Blackmagik Blazing': 15.0,
-        'BATTLE NO.1': 14.9,
-        'Angel dust': 15.0,
-        'Doppelganger': 14.9,
-        'Ascension to Heaven': 15.0,
-        'MARENOL': 15.0,
-        '真千年女王': 14.9,
-        '竹': 14.9,
-        'ホーリーサンバランド': 15.0,
-        'Garakuta Doll Play': 15.0,
-        'Caliburne ～Story of the Legendary sword～': 14.9,
-        'ねぇ、壊れタ人形ハ何処へ棄テらレるノ？': 14.9,
-        '封焔の135秒': 15.0,
-        'HERA': 15.0,
-        'TEmPTaTiON': 15.0,
-        'Aiolos': 15.0,
-        'Opfer': 15.0,
-        'Don\'t Fight The Music': 14.9,
-        'Titania': 15.0,
-        'AstrøNotes.': 15.0,
-        'Cult future': 15.0,
-        '其のエメラルドを見よ': 15.1,
-        '神威 (NAOKI × ZPP MIX)': 15.0,
-        'エンドマークに希望と涙を添えて': 15.0,
-        'Kattobi KEIKYU Rider': 14.9,
-        'Iudicium': 15.0,
-        'Gate of Doom': 14.9,
-        '夕焼けのRed Parade': 14.9,
-        'Climax': 15.0,
-        'Surrogate Life': 14.9,
-        'Megameteor': 15.0,
-        'Elemental Ethnic': 14.9,
-        '#SUP3RORBITAL': 14.9,
-        '盟月': 14.9,
-        'とあちゃんのおもちゃ箱': 14.9,
-        'Superbia': 14.9,
-        '幻想ロードオブキング': 14.9,
-        '黎命に殉ず': 15.1,
-    },
 
-    'ultima': {
-        'Aleph-0': 15.4,
-        '患部で止まってすぐ溶ける～狂気の優曇華院': 15.1,
-        'BlythE': 15.1,
-        'SON OF SUN': 15.1,
-        'Elemental Creation': 15.1,
-        'Halcyon': 15.1,
-        'Air': 15.2,
-        'Gate of Fate': 15.1,
-        'ジングルベル': 15.0,
-        'サドマミホリック': 14.9,
-        'L9': 15.0,
-        'Gustav Battle': 14.9,
-    },
-
-    'expert': {},
-
-    'advanced': {},
-
-    'basic': {},
-}
-
+const = {'ultima': {'Aleph-0': '15.4', '患部で止まってすぐ溶ける～狂気の優曇華院': '15.1', 'Elemental Creation': '15.1', 'BlythE': '15.1', 'SON OF SUN': '15.1', 'Halcyon': '15.1', 'Air': '15.2', 'Gate of Fate': '15.1', 'ジングルベル': '15.0', 'サドマミホリック': '14.9', 'L9': '15.0', 'Lapis': '14.9', 'Gustav Battle': '14.9', '脳漿炸裂ガール': '15.0', '腐れ外道とチョコレゐト': '14.8', 'taboo tears you up': '15.0', 'PRIVATE SERVICE': '14.9', '猛進ソリストライフ！': '14.8', 'Oshama Scramble!': '15.0', 'Evans': '14.7', '最終鬼畜妹フランドール・S': '14.5', 'ちくわパフェだよ☆CKP': '14.4', 'ネトゲ廃人シュプレヒコール': '14.3', '幾四音 -Ixion-': '14.3', 'ストリーミングハート': '14.1', 'ヒバナ': '14.0', 'アスノヨゾ ラ哨戒班': '14.0'}, 'master': {'Forsaken Tale': '15.7', '業 -善なる神とこの世の悪について-': '15.6', 'The Metaverse -First story of the SeelischTact-': '15.7', '祈 -我ら神祖と共に歩む者なり-': '15.7', 'MALKUTH -The Last Ruler of Terrestrials-': '15.6', 'Daphnis': '15.6', 'Chaotic Ørder': '15.6', 'Ultimate Force': '15.6', 'ピアノ協奏曲第1番"蠍火"': '15.5', 'ラストピースに祝福と栄光を': '15.5', '混沌を越えし我らが神聖なる調律主を讃えよ': '15.5', 'World Vanquisher': '15.5', "DA'AT -The First Seeker of Souls-": '15.6', 'グラウンドスライダー協奏曲第一番「風唄」': '15.6', 'Makear': '15.5', 'Tuatha Dé Danann': '15.5', 'Stardust:RAY': '15.3', 'To：Be Continued': '15.5', 'macrocosmos': '15.4', 'Rebellion': '15.4', '宿星審判': '15.4', 'Λzure Vixen': '15.5', 'βlαnoir': '15.4', 'Acid God': '15.4', "What's up? Pop!": '15.3', 'ANU': '15.3', 'POTENTIAL': '15.3', '怒槌': '15.4', '玩具狂奏曲 -終焉-': '15.3', 'Trrricksters!!': '15.3', 'X7124': '15.3', 'parvorbital': '15.3', 'Strange Love': '15.3', 'Disruptor Array': '15.3', 'リ・フィクション・O': '15.3', 'ENDYMION': '15.2', 'Invisible Frenzy': '15.2', 'sølips': '15.3', 'LAMIA': '15.3', 'MeteorSnow': '15.2', 'Contrapasso -inferno-': '15.2', 'otorii INNOVATED -[i]3-': '15.2', 'TiamaT:F minor': '15.3', 'Killing Rhythm': '15.3', '雪男': '15.2', '蜘蛛の糸': '15.2', 'ZegalltA': '15.2', 'マシンガンポエムドール': '15.1', 'Armageddon': ' 15.1', 'Big Bang': '15.1', 'Finite': '15.2', '神威': '15.1', 'A Site De La Rue': '15.1', "Rrhar'il": '15.1', 'ΩΩPARTS': '15.2', 'Odin': '15.1', 'GIGA BLAST': '15.1', '幻想即興曲': '15.1', 'HAELEQUIN (Original Remaster)': '15.2', '★LittlE HearTs★': '15.2', 'Dengeki Tube': '15.2', 'Giselle': '15.1', '小悪魔の遊園地': '15.1', 'Re：End of a Dream': '15.1', 'アポカリプスに反逆の焔を焚べろ': '15.1', 'Mutation': '15.1', 'チューリングの跡': '15.1', 'Latent Kingdom': '15.1', 'YURUSHITE': '15.1', "Viyella's Tears": '15.1', '脳天直撃': '15.1', "Viyella's Scream": '15.1', 'Singularity': '15.1', 'MarbleBlue.': '15.2', 'Xevel': '15.1', '赤壁、大炎上！！': '15.1', 'Schrecklicher Aufstand': '15.1', 'Devastating Blaster': '15.0', 'Glorious Crown (tpz over-Over-OVERCUTE REMIX)': '15.0', 'Surveiller et punir': '15.1', 'GIGA DRIVE': '15.1', 'Blazing:Storm': '15.0', 'Reverberate': '15.2', 'Scythe of Death': '15.2', '《創造》 ～ Cries, beyond The End': '15.1', 'LibrariA': '15.2', 'Wizdomiot': '15.0', 'neu': '15.0', 'Lemegeton -little key of solomon-': '14.9', 'Exitium': '14.9', 'AttraqtiA': '14.9', 'Sheriruth': '14.9', 'SINister Evolution': '14.9', 'Blackmagik Blazing': '15.0', 'BATTLE NO.1': '14.9', 'FREEDOM DiVE': '15.0', 'Angel dust': '15.0', 'Doppelganger': '14.9', 'Ascension to Heaven': '15.0', 'MARENOL': '15.0', '真千年女王': '14.9', '竹': '14.9', 'ホーリーサンバランド': '15.0', 'Garakuta Doll Play': '15.0', 'AMAZING MIGHTYYYY!!!!': '14.8', 'Caliburne ～Story of the Legendary sword～': '14.9', 'ねぇ、壊れタ人形ハ何処へ棄テらレるノ？': '14.9', 'Excalibur ～Revived resolution～': '14.8', '封焔の135秒': '15.0', 'the EmpErroR': '14.9', 'HERA': '15.0', 'TEmPTaTiON': '15.0', 'Aiolos': '15.0', 'Opfer': '15.0', "Don't Fight The Music": '14.9', 'Titania': '15.0', 'AstrøNotes.': '15.0', 'Falsum Atlantis.': '15.0', 'Cult future': '15.0', '其のエメラルドを見よ': '15.1', '神威 (NAOKI × ZPP MIX)': '15.0', 'エンドマークに希望と涙を添えて': '15.0', 'Kattobi KEIKYU Rider': '14.9', 'Iudicium': '15.0', 'Gate of Doom': '14.9', '夕焼けのRed Parade': '14.9', 'Climax': '15.0', '電光石火': '15.0', '8-EM': '14.8', 'Surrogate Life': '14.9', 'Trackless wilderness': '14.9', 'Megameteor': '15.0', 'Elemental Ethnic': '14.9', '#SUP3RORBITAL': '14.9', '盟月': '14.9', 'とあちゃんのおもちゃ箱': '14.9', 'Superbia': '14.9', '幻想ロードオブキング': '14.9', '黎命に殉ず': '15.1', 'ÅMARA(大未来電脳)': '14.8', '初音天地開闢神話': '14.8', '初音ミクの激唱': '14.8', 'Calamity Fortune': '14.8', 'VALLIS-NERIA': '14.6', 'BUCHiGiRE Berserker': '14.8', 'Crimson Phoenix': '14.8', 'Fracture Ray': '14.7', 'Grievous Lady': '14.8', 'Cthugha': '14.8', 'Sound Chimera': '14.8', '月の光': '14.7', 'ouroboros -twin stroke of the end-': '14.8', '水晶世界 ～Fracture～': '14.9', 'ヒュブリスの頂に聳そびえるのは': '14.9', 'Burn it All': '14.8', 'VERTeX': '14.7', 'Alea jacta est!': '14.8', '雷切 -RAIKIRI-': '14.9', 'Ai Nov': '14.8', 'MEGATON BLAST': '14.8', 'エータ・ベータ・イータ': '14.8', 'FLUFFY FLASH': '14.7', 'オンソクデイズ!!': '14.9', 'Stargazing Dreamer': '14.9', 'Paqqin (tpz Despair Remix)': '14.8', 'スピカの天秤': '14.8', 'Last Celebration': '14.7', 'Blessed Rain': '14.8', 'Everlasting Liberty': '14.7', 'うたかたのせかいで': '14.9', 'Malleus Maleficarum': '14.8', 'Imperishable Night 2006 (2016 Refine)': '14.7', 'BLUE ZONE': '14.7', 'Nhelv': '14.7', 'PUPA': '14.6', 'AXION': '14.7', '田中': '14.7', '色彩過剰のダイアリーミュージック': '14.7', 'larva': '14.7', 'Sage': '14.7', 'folern': '14.7', 'Walzer für das Nichts': '14.6', 'B100d Hunter': '14.7', "Parad'ox": '14.7', '[CRYSTAL_ACCESS]': '14.6', 'ウルガレオン': '14.7', 'deadeye': '14.7', 'ウニの歌': '14.6', '刃渡り2億センチ(TV edit)': '14.6', '初音ミクの消失': '14.5', 'XL TECHNO -More Dance Remix-': '14.5', '本物のヒーローとの戦い': '14.6', 'Wildfire': '14.5', 'GERBERA': '14.6', 'Halcyon': '14.6', 'Air': '14.5', 'Destr0yer': '14.5', 'CITRUS MONSTER': '14.6', '花と、雪と、ドラムンベース。': '14.6', 'Alcyone': '14.6', 'Good bye, Merry-Go-Round.': '14.6', 'SUPER AMBULANCE': '14.5', 'TECHNOPOLIS 2085': '14.5', 'IMPACT': '14.5', 'Qliphothgear': '14.5', '†大闘士＝クライン・フォーゲル・シュピール＝えりか†': '14.6', '空間創造理論': '14.6', 'Overhea[r]t': '14.5', 'ソーシャルワンダーランド': '14.5', 'ラクガキスト': '14.4', '最終鬼畜妹フランドール・S': '14.4', 'きゅうりバーにダイブ': '14.4', 'Evans': '14.4', 'SON OF SUN': '14.4', 'めっちゃ煽ってくるタイプの音ゲーボス曲ちゃんなんかに負けないが？？？？？': '14.5', 'volcanic': '14.4', 'ZEUS': '14.5', 'J219': '14.5', 'Like the Wind [Reborn]': '14.4', 'U&iVERSE -銀河鸞翔-': '14.4', 'Moon of Noon': '14.4', 'Regulus': '14.4', 'Prominence': '14.4', 'RELOAD': '14.4', 'Vibes 2k20': '14.4', 'Tidal Wave': '14.4', 'オススメ☆♂♀☆でぃすとぴあ': '14.4', 'ハートアタック': '14.4', 'Nijirate Fanatics': '14.4', 'Insane Gamemode': '14.4', 'SQUAD-Phvntom-': '14.4', 'マツヨイナイトバグ': '14.3', 'Brain Power': '14.3', 'Joe Fight': '14.3', 'Taiko Drum Monster': '14.3', 'GOODTEK': '14.3', '燃えてもエンジ ョイ！宛城、炎上！！': '14.3', 'Hyper Active': '14.3', 'VIIIbit Explorer': '14.3', 'MAXRAGE': '14.3', 'ミラージュ・フレイグランス': '14.3', 'Warcry': '14.3', 'CHOCOLATE BOMB!!!!': '14.3', 'StufeStern': '14.3', '中学2年生のアンドロイド': '14.3', '大天使ユリア★降臨!': '14.3', 'Overturn': '14.3', 'おしゃまなプリンセス': '14.5', '熱異常': '14.2', 'イナイイナイ依存症': '14.2', '電脳少女は歌姫の夢を見るか？': '14.2', '害虫': '14.2', 'インビジブル': '14.2', 'Revived': '14.2', 'レータイスパークEx': '14.2', 'サドマミホリック': '14.2', 'Knight Rider': '14.2', 'Cyaegha': '14.2', 'Jakarta PROGRESSION': '14.2', 'ENERGY SYNERGY MATRIX': '14.2', 'Dramatic...?': '14.2', '覚醒楽奏メタフィクション': '14.2', 'トリスメギストス': '14.2', 'Brightness': '14.2', 'スコーピオンガールの貴重な捕食シーン': '14.1', '頓珍漢の宴': '14.1', '拝啓ドッペルゲンガー': '14.1', 'Arcahv': '14.1', 'CO5M1C R4ILR0AD': '14.1', 'The wheel to the Night ～インド人が夢に!?～': '14.1', '僕らのFreedom DiVE↓': '14.1', 'モ°ルモ°ル': '14.1', 'Baqeela': '14.1', 'Last Kingdom': '14.1', 'おまかせ！！トラブルメイ娘☆とれびちゃん': '14.1', 'ピュグマリオンの咒文': '14.1', 'インパアフェクシオン・ホワイトガアル': '14.1', 'crazy (about you)': '14.1', '壱雫空': '14.0', 'キルミーのベイベー！': '14.0', 'BlackFlagBreaker!!': '14.0', 'デンパラダイム': '14.0', '寡黙なるフォール': '14.0', '宵闇の月に抱かれて': '14.0', 'MEGALOVANIA': '14.0', "Outlaw's Lullaby": '14.0', "MELtin' 17": '14.0', '紅き魔汁、闇より降りて天啓の響きを導く': '14.0', 'Rule the World!!': '14.0', 'Death Doll': '14.0', 'BOKUTO': '14.0', '立川浄穢捕物帳': '14.0', 'Innocent Truth': '14.0', 'アイリちゃんは暗黒魔導士!': '14.0', '再生不能': '14.0', 'Athlete Killer "Meteor"': '14.0', "I'll make you Super Rock Star": '14.0', 'ガチ恋ラビリンス': '14.0', 'ASH': '14.0', 'イーヴィルガール': '14.0'}, 'expert': {'ENDYMION': '14.5', '祈 -我ら神祖と共に歩む者なり-': '14.5', 'MALKUTH -The Last Ruler of Terrestrials-': '14.5', 'Ultimate Force': '14.4', 'Forsaken Tale': '14.5', '混沌を越えし我らが神聖なる調律主を讃えよ': '14.4', 'Disruptor Array': '14.4', 'Daphnis': '14.4', 'To：Be Continued': '14.3', 'X7124': '14.3', 'DA’AT -The First Seeker of Souls-': '14.3', 'Tuatha Dé Danann': '14.3', "What's up? Pop!": '14.1', 'LAMIA': '14.1', 'ラストピースに祝福と栄光を': '14.3', 'マシンガンポエムドール': '13.8', 'POTENTIAL': '14.0', 'グラウンドスライダー協奏曲第一番「風唄」': '14.0'}, 'advanced': {}, 'basic': {}}
 def urlParse(filename: str) -> str:
     return os.path.dirname(os.path.realpath(__file__)) + '\\' + filename
 
@@ -185,7 +35,7 @@ def parseWebelement(diff: int, namelist: list[str], scorelist: list[str], comboS
             diffValue = ['basic', 'advanced', 'expert', 'master', 'ultima'][diff] # 난이도 ( str )
             level = str(const[diffValue][song['title']]) if song['title'] in const[diffValue] else song['sheets'][diff]['internalLevel'] # 레벨 ( str )
             levelValue = const[diffValue][song['title']] if song['title'] in const[diffValue] else song['sheets'][diff]['internalLevelValue'] # 레벨 ( float )
-            ratingValue = calc_rating(scoreValue, level) # 레이팅 ( Decimal )
+            ratingValue = calc_rating(scoreValue, levelValue) # 레이팅 ( Decimal )
             rating = f'{int(ratingValue * 100) / 100:.2f}' # 레이팅 ( str )
             image = IMAGE_DATA_FETCH_URL + song['imageName'] # 커버 이미지 ( str )
 
@@ -316,7 +166,7 @@ def playerProfileStyle(possession: str) -> str:
 
 
 def replaceAlphabet(string: str) -> str:
-    for i in 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ':
+    for i in 'ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９':
         string = string.replace(i, chr(ord(i) - 65248))
     return string
 
@@ -382,13 +232,20 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '7064627094736' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '8012393433157' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_block.find('div', 'player_chara')
 
         friend_style_charaFrame = friend_player_chara.attrs['style']
         friend_src_character = friend_player_chara.find('img').attrs['src']
         friend_style_honor = friend_block.find('div', 'player_honor_short').attrs['style']
+
+        friend_src_classemblem_base = friend_block.find('div', 'player_classemblem_base')
+        if friend_src_classemblem_base:
+            friend_src_classemblem_base = friend_src_classemblem_base.find('img').attrs['src']
+        else:
+            friend_src_classemblem_base = ''
+
         friend_src_classemblem_medal = friend_block.find('div', 'player_classemblem_top')
         if friend_src_classemblem_medal:
             friend_src_classemblem_medal = friend_src_classemblem_medal.find('img').attrs['src']
@@ -414,7 +271,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 7064627094736,
+                    'friend': 8012393433157,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
@@ -456,11 +313,12 @@ if __name__ == '__main__':
                             <span class="honorText">{friend_honor_text}</span>
                         </div>
                         <div class="rowContainer" style="justify-content: space-around;">
-                            <span class="profileBoldText">{replaceAlphabet(friend_name)}</span>
                             <span class="profileBoldText">LV. {friend_lv}</span>
+                            <span class="profileBoldText">{replaceAlphabet(friend_name)}</span>
                         </div>
-                        <div class="rowContainer" style="justify-content: space-around;">
-                            {f'<img class="profileClassEmblem" src="{friend_src_classemblem_medal}">' if friend_src_classemblem_medal else ''}
+                        <div class="rowContainer" style="position: relative; height: 200px;">
+                            {f'<img class="profileClassEmblem" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" src="{friend_src_classemblem_base}">' if friend_src_classemblem_base else ''}
+                            {f'<img class="profileClassEmblem" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);" src="{friend_src_classemblem_medal}">' if friend_src_classemblem_medal else ''}
                         </div>
                     </div>
                 </div>
