@@ -17,6 +17,157 @@ from config import *
 from fetchURL import *
 import sourcetypes
 
+const = {
+    'master': {
+        'Forsaken Tale': 15.7,
+        '業 -善なる神とこの世の悪について-': 15.6,
+        'The Metaverse -First story of the SeelischTact-': 15.7,
+        '祈 -我ら神祖と共に歩む者なり-': 15.7,
+        'MALKUTH -The Last Ruler of Terrestrials-': 15.6,
+        'Daphnis': 15.6,
+        'Chaotic Ørder': 15.6,
+        'Ultimate Force': 15.6,
+        'ピアノ協奏曲第1番"蠍火"': 15.5,
+        'ラストピースに祝福と栄光を': 15.5,
+        '混沌を越えし我らが神聖なる調律主を讃えよ': 15.5,
+        'World Vanquisher': 15.5,
+        'DA\'AT -The First Seeker of Souls-': 15.6,
+        'グラウンドスライダー協奏曲第一番「風唄」': 15.6,
+        'Makear': 15.5,
+        'Tuatha Dé Danann': 15.5,
+        'Stardust:RAY': 15.3,
+        'To：Be Continued': 15.5,
+        'macrocosmos': 15.4,
+        'Rebellion': 15.4,
+        '宿星審判': 15.4,
+        'Λzure Vixen': 15.5,
+        'βlαnoir': 15.4,
+        'Acid God': 15.4,
+        'What\'s up? Pop!': 15.3,
+        'ANU': 15.3,
+        'POTENTIAL': 15.3,
+        '怒槌': 15.4,
+        '玩具狂奏曲 -終焉-': 15.3,
+        'Trrricksters!!': 15.3,
+        'X7124': 15.3,
+        'parvorbital': 15.3,
+        'Strange Love': 15.3,
+        'Disruptor Array': 15.3,
+        'リ・フィクション・O': 15.3,
+        'ENDYMION': 15.2,
+        'Invisible Frenzy': 15.2,
+        'sølips': 15.3,
+        'LAMIA': 15.3,
+        'MeteorSnow': 15.2,
+        'Contrapasso -inferno-': 15.2,
+        'otorii INNOVATED -[i]3-': 15.2,
+        'TiamaT:F minor': 15.3,
+        'Killing Rhythm': 15.3,
+        '雪男': 15.2,
+        '蜘蛛の糸': 15.2,
+        'ZegalltA': 15.2,
+        'マシンガンポエムドール':15.1,
+        'Armageddon': 15.1,
+        'Big Bang': 15.1,
+        'Finite': 15.2,
+        '神威': 15.1,
+        'A Site De La Rue': 15.1,
+        'Rrhar\'il': 15.1,
+        'ΩΩPARTS': 15.2,
+        'Odin': 15.1,
+        '幻想即興曲': 15.1,
+        'HAELEQUIN (Original Remaster)': 15.2,
+        '★LittlE HearTs★': 15.2,
+        'Dengeki Tube': 15.2,
+        'Giselle': 15.1,
+        '小悪魔の遊園地': 15.1,
+        'アポカリプスに反逆の焔を焚べろ': 15.1,
+        'Mutation': 15.1,
+        'チューリングの跡': 15.1,
+        'Latent Kingdom': 15.1,
+        'YURUSHITE': 15.1,
+        'Viyella\'s Tears': 15.1,
+        '脳天直撃': 15.1,
+        'Singularity': 15.1,
+        'MarbleBlue.': 15.2,
+        'Xevel': 15.1,
+        '赤壁、大炎上！！': 15.1,
+        'Schrecklicher Aufstand': 15.1,
+        'Devastating Blaster': 15.0,
+        'Glorious Crown (tpz over-Over-OVERCUTE REMIX)': 15.0,
+        'Surveiller et punir': 15.1,
+        'GIGA DRIVE': 15.1,
+        'Blazing:Storm': 15.0,
+        'Scythe of Death': 15.2,
+        '《創造》 ～ Cries, beyond The End': 15.1,
+        'LibrariA': 15.2,
+        'Wizdomiot': 15.0,
+        'Lemegeton -little key of solomon-': 14.9,
+        'Exitium': 14.9,
+        'AttraqtiA': 14.9,
+        'Sheriruth': 14.9,
+        'SINister Evolution': 14.9,
+        'Blackmagik Blazing': 15.0,
+        'BATTLE NO.1': 14.9,
+        'Angel dust': 15.0,
+        'Doppelganger': 14.9,
+        'Ascension to Heaven': 15.0,
+        'MARENOL': 15.0,
+        '真千年女王': 14.9,
+        '竹': 14.9,
+        'ホーリーサンバランド': 15.0,
+        'Garakuta Doll Play': 15.0,
+        'Caliburne ～Story of the Legendary sword～': 14.9,
+        'ねぇ、壊れタ人形ハ何処へ棄テらレるノ？': 14.9,
+        '封焔の135秒': 15.0,
+        'HERA': 15.0,
+        'TEmPTaTiON': 15.0,
+        'Aiolos': 15.0,
+        'Opfer': 15.0,
+        'Don\'t Fight The Music': 14.9,
+        'Titania': 15.0,
+        'AstrøNotes.': 15.0,
+        'Cult future': 15.0,
+        '其のエメラルドを見よ': 15.1,
+        '神威 (NAOKI × ZPP MIX)': 15.0,
+        'エンドマークに希望と涙を添えて': 15.0,
+        'Kattobi KEIKYU Rider': 14.9,
+        'Iudicium': 15.0,
+        'Gate of Doom': 14.9,
+        '夕焼けのRed Parade': 14.9,
+        'Climax': 15.0,
+        'Surrogate Life': 14.9,
+        'Megameteor': 15.0,
+        'Elemental Ethnic': 14.9,
+        '#SUP3RORBITAL': 14.9,
+        '盟月': 14.9,
+        'とあちゃんのおもちゃ箱': 14.9,
+        'Superbia': 14.9,
+        '幻想ロードオブキング': 14.9,
+        '黎命に殉ず': 15.1,
+    },
+
+    'ultima': {
+        'Aleph-0': 15.4,
+        '患部で止まってすぐ溶ける～狂気の優曇華院': 15.1,
+        'BlythE': 15.1,
+        'SON OF SUN': 15.1,
+        'Elemental Creation': 15.1,
+        'Halcyon': 15.1,
+        'Air': 15.2,
+        'Gate of Fate': 15.1,
+        'ジングルベル': 15.0,
+        'サドマミホリック': 14.9,
+        'L9': 15.0,
+        'Gustav Battle': 14.9,
+    },
+
+    'expert': {},
+
+    'advanced': {},
+
+    'basic': {},
+}
 
 def urlParse(filename: str) -> str:
     return os.path.dirname(os.path.realpath(__file__)) + '\\' + filename
@@ -32,8 +183,8 @@ def parseWebelement(diff: int, namelist: list[str], scorelist: list[str], comboS
             score = str(scorelist[curidx]) # 점수 ( str )
             scoreValue = int(score.replace(',', '')) # 점수 ( int )
             diffValue = ['basic', 'advanced', 'expert', 'master', 'ultima'][diff] # 난이도 ( str )
-            level = song['sheets'][diff]['internalLevel'] # 레벨 ( str )
-            levelValue = song['sheets'][diff]['internalLevelValue'] # 레벨 ( float )
+            level = str(const[diffValue][song['title']]) if song['title'] in const[diffValue] else song['sheets'][diff]['internalLevel'] # 레벨 ( str )
+            levelValue = const[diffValue][song['title']] if song['title'] in const[diffValue] else song['sheets'][diff]['internalLevelValue'] # 레벨 ( float )
             ratingValue = calc_rating(scoreValue, level) # 레이팅 ( Decimal )
             rating = f'{int(ratingValue * 100) / 100:.2f}' # 레이팅 ( str )
             image = IMAGE_DATA_FETCH_URL + song['imageName'] # 커버 이미지 ( str )
@@ -231,7 +382,7 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '8038648670957' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '7064627094736' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_block.find('div', 'player_chara')
 
@@ -263,7 +414,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 8038648670957,
+                    'friend': 7064627094736,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
