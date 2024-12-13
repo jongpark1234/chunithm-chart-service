@@ -232,7 +232,7 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '8012393433157' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '8038422093155' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_block.find('div', 'player_chara')
 
@@ -252,10 +252,16 @@ if __name__ == '__main__':
         else:
             friend_src_classemblem_medal = ''
 
+        friend_src_player_reborn = friend_block.find('div', 'player_reborn')
+        if friend_src_player_reborn:
+            friend_src_player_reborn = int(friend_src_player_reborn.text.strip())
+        else:
+            friend_src_player_reborn = 0
+
         friend_honor_text = friend_block.find('div', 'player_honor_text').text
 
         friend_name = friend_block.find('div', 'player_name_in').text.strip()
-        friend_lv = friend_block.find("div", 'player_lv').text.strip()
+        friend_lv = int(friend_block.find("div", 'player_lv').text.strip()) + friend_src_player_reborn * 100
         friend_team = friend_block.find('div', 'player_team_name').text.strip()
         friend_rating = Decimal(''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.'))
         friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
@@ -271,7 +277,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 8012393433157,
+                    'friend': 8038422093155,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
