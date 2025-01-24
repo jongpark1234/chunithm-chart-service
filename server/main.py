@@ -234,7 +234,7 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': TARGET_FRIENDCODE }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': '8038422093155' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_block.find('div', 'player_chara')
 
@@ -285,7 +285,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': TARGET_FRIENDCODE,
+                    'friend': 8038422093155,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
