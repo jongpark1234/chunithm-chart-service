@@ -18,6 +18,9 @@ from fetchURL import *
 import sourcetypes
 
 
+CURRENT_VERSION = 'VERSE'
+
+
 def urlParse(filename: str) -> str:
     return os.path.dirname(os.path.realpath(__file__)) + '\\' + filename
 
@@ -41,20 +44,37 @@ def parseWebelement(diff: int, namelist: list[str], scorelist: list[str], comboS
             comboStatusElement = comboStatuslist[curidx].find('img')
             comboStatus = (1 if comboStatusElement.attrs['src'].split('/')[-1] == 'icon_fullcombo.png' else 2) if comboStatusElement else 0
 
-            # save at ret array
-            result.append({
-                'name': name,
-                'score': score,
-                'scoreValue': scoreValue,
-                'diff': diff,
-                'diffValue': diffValue,
-                'level': level,
-                'levelValue': levelValue,
-                'rating': rating,
-                'ratingValue': ratingValue,
-                'comboStatus': comboStatus,
-                'image': image
-            })
+            # 현재 곡의 버전이 최신 버전인 경우 신곡 차트로 반영
+            if song['version'] == CURRENT_VERSION:
+                new_result.append({
+                    'name': name,
+                    'score': score,
+                    'scoreValue': scoreValue,
+                    'diff': diff,
+                    'diffValue': diffValue,
+                    'level': level,
+                    'levelValue': levelValue,
+                    'rating': rating,
+                    'ratingValue': ratingValue,
+                    'comboStatus': comboStatus,
+                    'image': image
+                })
+            
+            # 아닐 경우 구곡 차트로 반영
+            else:
+                old_result.append({
+                    'name': name,
+                    'score': score,
+                    'scoreValue': scoreValue,
+                    'diff': diff,
+                    'diffValue': diffValue,
+                    'level': level,
+                    'levelValue': levelValue,
+                    'rating': rating,
+                    'ratingValue': ratingValue,
+                    'comboStatus': comboStatus,
+                    'image': image
+                })
 
 
 def calc_rating(score: int, internal_level: float) -> Decimal:
@@ -104,7 +124,7 @@ def getRankTextShadow(score: int) -> str:
 
     elif Rank.from_score(score) == Rank.SSp:
         bright = 0.3
-        color = 'goldenrod'
+        color = 'rgb(255, 123, 0)'
         times = 3
         
     elif Rank.from_score(score) == Rank.SS:
@@ -193,7 +213,8 @@ def sendFriendInvite(friend_code: str) -> int:
         return send_invite.status_code
 
 
-result = []
+old_result = []
+new_result = []
 chart = json.load(open(urlParse('chart.json'), 'r', encoding='utf-8'))
 
 LOGIN_PARAMS = {
@@ -234,7 +255,7 @@ if __name__ == '__main__':
         
         friend = session.get('https://chunithm-net-eng.com/mobile/friend/')
         friend_soup = BeautifulSoup(friend.text, 'html.parser')
-        friend_block = friend_soup.find('input', { 'value': '8038422093155' }).find_parent('div', 'friend_block')
+        friend_block = friend_soup.find('input', { 'value': f'{TARGET_FRIENDCODE}' }).find_parent('div', 'friend_block')
 
         friend_player_chara = friend_block.find('div', 'player_chara')
 
@@ -266,13 +287,15 @@ if __name__ == '__main__':
         else:
             friend_team = ''
 
-
-        friend_honor_text = friend_block.find('div', 'player_honor_text').text
+        friend_honor_text = friend_block.find('div', 'player_honor_text')
+        if friend_honor_text:
+            friend_honor_text = friend_honor_text.text
+        else:
+            friend_honor_text = ''
 
         friend_name = friend_block.find('div', 'player_name_in').text.strip()
         friend_lv = friend_src_player_reborn * 100 + int(friend_block.find("div", 'player_lv').text.strip())
         friend_rating = Decimal(''.join(map(lambda x: x.attrs['src'][-5], friend_block.find('div', 'player_rating_num_block').find_all('img'))).replace('a', '.'))
-        friend_rating_max = friend_block.find('div', 'player_rating_max').text.strip()
         friend_overpower = friend_block.find('div', 'player_overpower').text.strip()
         friend_overpower_const = Decimal(friend_overpower.split()[0])
         friend_overpower_percent = Decimal(friend_overpower.split()[1][1:-2])
@@ -285,7 +308,7 @@ if __name__ == '__main__':
                 headers=VS_HEADERS,
                 data={
                     'genre': 99,
-                    'friend': 8038422093155,
+                    'friend': TARGET_FRIENDCODE,
                     'radio_diff': diff,
                     'loseOnly': 'on',
                     'token': AUTH_TOKEN
@@ -298,14 +321,15 @@ if __name__ == '__main__':
             comboStatuslist = list(soup.find_all(attrs={ 'class': 'vs_list_friendbatch clearfix' }))
             parseWebelement(diff, namelist, scorelist, comboStatuslist)
 
-    result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
-    result = result[:30]
-    best30_sum = Decimal(sum(map(lambda x: x['ratingValue'], result)))
-    best10_sum = Decimal(sum(map(lambda x: x['ratingValue'], result[:10])))
-    recent = friend_rating * 2 - Decimal(best30_sum) / 30
-    reachable = (best30_sum / 30 + best10_sum / 10) / 2
-
+    old_result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
+    old_result = old_result[:30]
+    
+    new_result.sort(key=lambda x: (-x['ratingValue'], -x['scoreValue']))
+    new_result = new_result[:20]
     bn = '\n'
+
+    old_rating = round(sum(map(lambda x: x['ratingValue'], old_result)) / len(old_result), 2)
+    new_rating = round(sum(map(lambda x: x['ratingValue'], new_result)) / len(new_result), 2)
 
     style_head = open(urlParse('styleHead.html'), encoding='utf-8').read()
     html_content: sourcetypes.xml = f"""<body>
@@ -340,14 +364,14 @@ if __name__ == '__main__':
                 <div class="rightInfoContainer" {playerProfileStyle(friend_possession)}>
                     <div class="infoTitleContainer">
                         <span class="infoTitleText">RATING</span>
-                        <span class="infoTitleText">AVERAGE</span>
-                        <span class="infoTitleText">RECENT</span>
+                        <span class="infoTitleText">OLD RATING</span>
+                        <span class="infoTitleText">NEW RATING</span>
                         <span class="infoTitleText">OVERPOWER</span>
                     </div>
                     <div class="infoDataContainer">
-                        <span class="infoDataText">{friend_rating} ( MAX {friend_rating_max} )</span>
-                        <span class="infoDataText">{sum(map(lambda x: x['ratingValue'], result)) / 30:.2f}</span>
-                        <span class="infoDataText">{recent:.2f} ( Reachable {reachable:.2f} )</span>
+                        <span class="infoDataText">{friend_rating}</span>
+                        <span class="infoDataText">{old_rating}</span>
+                        <span class="infoDataText">{new_rating}</span>
                         <div class="overpowerGauge">
                             <div class="overpowerGaugeBlock" style="width: {100 - friend_overpower_percent}%"></div>
                         </div>
@@ -362,7 +386,7 @@ if __name__ == '__main__':
                     <div class="element">
                         <div class="elementOrder"># {song[0] + 1}</div>
                         <div class="elementWrapper">
-                            <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 1px {chart['difficulties'][song[1]['diff']]['color']};"/>
+                            <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 3px {chart['difficulties'][song[1]['diff']]['color']};"/>
                             <div class="songInfoContainer">
                                 <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
                                 <div class="columnContainer">
@@ -388,7 +412,43 @@ if __name__ == '__main__':
                             </div>
                         </div>
                     </div>
-                ''', enumerate(result)))}
+                ''', enumerate(old_result)))}
+
+            </div>
+
+            <div class="ratingContainer">
+
+                {bn.join(map(lambda song: f'''
+                    <div class="element">
+                        <div class="newElementOrder"># {song[0] + 1}</div>
+                        <div class="elementWrapper">
+                            <img class="songImage" src="{song[1]['image']}" style="box-shadow: 0 0 3px 3px {chart['difficulties'][song[1]['diff']]['color']};"/>
+                            <div class="songInfoContainer">
+                                <span class="songTitle" {songNameStyle(song[1]['comboStatus'])}>{song[1]['name']}</span>
+                                <div class="columnContainer">
+                                    <div class="textRowContainer">
+                                        <span class="songDetailKey">CONST -</span>
+                                        <div class="textRowContainer">    
+                                            <span class="songText">&nbsp;{song[1]['level'].split('.')[0]}.</span>
+                                            <span class="songRatingDetail">{song[1]['level'].split('.')[1]}</span>
+                                        </div>
+                                    </div>
+                                    <div class="textRowContainer">
+                                        <span class="songDetailKey" style="letter-spacing: 0.018rem;">SCORE -</span>
+                                        <span class="songText">&nbsp;{song[1]['score']}</span>
+                                    </div>
+                                </div>
+                                <div class="rowContainer">
+                                    <div class="textRowContainer">
+                                        <span class="songRating">↪ {song[1]['rating'].split('.')[0]}.</span>
+                                        <span class="songRatingDetail">{song[1]['rating'].split('.')[1]}</span>
+                                    </div>
+                                    <span class="songRank" style="text-shadow: {getRankTextShadow(song[1]['scoreValue'])};">{Rank.from_score(song[1]['scoreValue'])}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ''', enumerate(new_result)))}
 
             </div>
 
@@ -398,7 +458,7 @@ if __name__ == '__main__':
     
     open(urlParse('output.html'), 'w', encoding='utf-8').write(style_head + html_content)
     options = webdriver.ChromeOptions()
-    options.add_argument('window-size=1200x1200')
+    options.add_argument('window-size=2400x2400')
     options.add_argument('headless')
     driver = webdriver.Chrome(options=options)
     driver.get(urlParse('output.html'))

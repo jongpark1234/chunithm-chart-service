@@ -18,12 +18,14 @@
             margin: 0;
         }
         .background {
-            height: calc(945px * 1.25);
-            aspect-ratio: 0.586;
+            width: 1200px;
+            height: 1280px;
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
-            justify-content: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            justify-content: space-evenly;
             align-items: center;
             position: relative;
             background-color: #100f0D;
@@ -163,15 +165,15 @@
         }
        .ratingContainer {
             width: 97%;
-            height: 85%;
             display: flex;
+            row-gap: 20px;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
         }
         .element {
-            width: 32%;
-            height: 8.5%;
+            width: 215px;
+            height: 85px;
             background-color: #2C2C2C;
             box-shadow: 0 0 4px 1px grey;
             border-radius: 3px;
@@ -276,6 +278,33 @@
             width: 0;
             height: 0;
             border-top: 5px solid #666666;
+            border-left: 5px solid transparent;
+            transform: translateY(100%);
+       }
+       .newElementOrder {
+            position: absolute;
+            top: 5%;
+            left: 0px;
+            width: 15%;
+            height: 20%;
+            transform: translateX(-20%);
+            color: rgb(48, 48, 48);
+            background-color: #72b1b6;
+            border-radius: 0 45% 45% 0;
+            font-weight: bold;
+            font-size: 0.7rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       .newElementOrder::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 5px solid #3b615e;
             border-left: 5px solid transparent;
             transform: translateY(100%);
        }
